@@ -7,7 +7,7 @@ export const Maininfocard = () => {
     <Flex
       bg="gray.0"
       w="100%"
-      mih="100vh"
+      h="80vh"
       py={60}
       style={{
         borderRadius: "2.5rem",
