@@ -1,10 +1,11 @@
 import { Flex } from "@mantine/core";
 import { Header } from "../components/header";
-import { SearchBar } from "../components/searchbar";
 import { Footer } from "../components/footer";
 import { Maininfocard } from "../components/maininfocard";
+import { getQuestions } from "../api/route";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const data = await getQuestions();
   return (
     <Flex
       direction={"column"}
@@ -15,7 +16,6 @@ export default function HomePage() {
       }}
     >
       <Header />
-      <SearchBar />
       <Maininfocard />
       <Footer />
     </Flex>

@@ -1,8 +1,8 @@
 "use client";
-import { Flex, Tabs } from "@mantine/core";
-import { Quizcard } from "../quizcard";
-
+import { Button, Center, Flex, TextInput, rem } from "@mantine/core";
+import { IconSearch } from "@tabler/icons-react";
 export const Maininfocard = () => {
+  const searchIcon = <IconSearch style={{ width: rem(16), height: rem(16) }} />;
   return (
     <Flex
       bg="gray.0"
@@ -13,38 +13,23 @@ export const Maininfocard = () => {
         borderRadius: "2.5rem",
       }}
     >
-      <Tabs h={"100%"}>
-        <Tabs.List>
-          <Tabs.Tab value="wwi">WWI</Tabs.Tab>
-          <Tabs.Tab value="wwii">WWII</Tabs.Tab>
-          <Tabs.Tab value="coldwar">Cold War</Tabs.Tab>
-          <Tabs.Tab value="modern">Modern</Tabs.Tab>
-        </Tabs.List>
-        <Tabs.Panel value="wwi">
-          <Flex
-            direction="column"
-            mah={500}
-            gap={36}
-            style={{ overflowY: "auto" }}
-          >
-            <Quizcard />
-            <Quizcard />
-            <Quizcard />
-            <Quizcard />
-            <Quizcard />
-            <Quizcard />
-          </Flex>
-        </Tabs.Panel>
-        <Tabs.Panel value="wwii">
-          <Quizcard />
-        </Tabs.Panel>
-        <Tabs.Panel value="coldwar">
-          <Quizcard />
-        </Tabs.Panel>
-        <Tabs.Panel value="modern">
-          <Quizcard />
-        </Tabs.Panel>
-      </Tabs>
+      <Center>
+        <TextInput
+          w="65%"
+          radius="xl"
+          placeholder="Search"
+          c="gray.0"
+          leftSectionPointerEvents="none"
+          leftSection={searchIcon}
+          styles={{
+            input: {
+              background: "white",
+              border: "transparent",
+            },
+          }}
+        />
+      </Center>
+      <Button>Start Quiz</Button>
     </Flex>
   );
 };
