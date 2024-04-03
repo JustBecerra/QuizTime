@@ -10,7 +10,7 @@ export default async function HomePage() {
       gap={20}
       style={{
         background: "linear-gradient(135deg, #3550DC, #27E9F7)",
-        height: "100%",
+        height: "100vh",
       }}
     >
       <Header />
