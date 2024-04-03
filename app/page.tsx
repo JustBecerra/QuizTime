@@ -5,7 +5,7 @@ import { Maininfocard } from "../components/maininfocard";
 import { getQuestions } from "../api/route";
 
 export default async function HomePage() {
-  const data = await getQuestions();
+  // const data = await getQuestions();
   return (
     <Flex
       direction={"column"}
