@@ -1,18 +1,11 @@
 "use client";
-import {
-  Button,
-  Container,
-  Flex,
-  Title,
-  List,
-  rem,
-  Center,
-} from "@mantine/core";
+import { Button, Flex, Title, List, rem } from "@mantine/core";
 import {
   IconBarbell,
   IconClockHour5,
   IconHelpOctagonFilled,
 } from "@tabler/icons-react";
+import { theme } from "../../theme";
 
 export const Maininfocard = () => {
   const questionIcon = (
@@ -27,7 +20,7 @@ export const Maininfocard = () => {
   return (
     <Flex
       bg="gray.0"
-      w="100%"
+      w={{ base: "90%", md: "30%" }}
       h="65vh"
       style={{
         borderRadius: "2.5rem",

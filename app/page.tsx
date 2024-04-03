@@ -11,6 +11,8 @@ export default async function HomePage() {
       style={{
         background: "linear-gradient(135deg, #3550DC, #27E9F7)",
         height: "100vh",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <Header />
