@@ -35,7 +35,7 @@ export const Maininfocard = () => {
       }}
     >
       <Flex direction="column" justify="space-evenly" h="80%">
-        <Title order={1} c="deepBlue.4">
+        <Title order={1} c="deepBlue.4" fs="italic">
           Test your knowledge
         </Title>
         <List size="lg" withPadding>
