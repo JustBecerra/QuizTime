@@ -1,10 +1,31 @@
 "use client";
-import { Flex, Tabs } from "@mantine/core";
-import { Quizcard } from "../quizcard";
+import {
+  Button,
+  Container,
+  Flex,
+  Title,
+  List,
+  rem,
+  Center,
+} from "@mantine/core";
+import {
+  IconBarbell,
+  IconClockHour5,
+  IconHelpOctagonFilled,
+} from "@tabler/icons-react";
 
 export const Maininfocard = () => {
+  const questionIcon = (
+    <IconHelpOctagonFilled style={{ width: rem(16), height: rem(16) }} />
+  );
+  const timeIcon = (
+    <IconClockHour5 style={{ width: rem(16), height: rem(16) }} />
+  );
+  const difficultyIcon = (
+    <IconBarbell style={{ width: rem(16), height: rem(16) }} />
+  );
   return (
-    <Flex
+    <Container
       bg="gray.0"
       w="100%"
       h="80vh"
@@ -13,38 +34,23 @@ export const Maininfocard = () => {
         borderRadius: "2.5rem",
       }}
     >
-      <Tabs h={"100%"}>
-        <Tabs.List>
-          <Tabs.Tab value="wwi">WWI</Tabs.Tab>
-          <Tabs.Tab value="wwii">WWII</Tabs.Tab>
-          <Tabs.Tab value="coldwar">Cold War</Tabs.Tab>
-          <Tabs.Tab value="modern">Modern</Tabs.Tab>
-        </Tabs.List>
-        <Tabs.Panel value="wwi">
-          <Flex
-            direction="column"
-            mah={500}
-            gap={36}
-            style={{ overflowY: "auto" }}
-          >
-            <Quizcard />
-            <Quizcard />
-            <Quizcard />
-            <Quizcard />
-            <Quizcard />
-            <Quizcard />
-          </Flex>
-        </Tabs.Panel>
-        <Tabs.Panel value="wwii">
-          <Quizcard />
-        </Tabs.Panel>
-        <Tabs.Panel value="coldwar">
-          <Quizcard />
-        </Tabs.Panel>
-        <Tabs.Panel value="modern">
-          <Quizcard />
-        </Tabs.Panel>
-      </Tabs>
-    </Flex>
+      <Flex direction="column" justify="space-evenly" h="80%">
+        <Title order={1} c="deepBlue.4">
+          Test your knowledge
+        </Title>
+        <List size="lg" withPadding>
+          <List.Item icon={questionIcon} c="gray.9">
+            10 questions
+          </List.Item>
+          <List.Item icon={timeIcon} c="gray.9">
+            30 seconds per question
+          </List.Item>
+          <List.Item icon={difficultyIcon} c="gray.9">
+            questions vary on difficulty
+          </List.Item>
+        </List>
+        <Button>Start Quiz</Button>
+      </Flex>
+    </Container>
   );
 };
