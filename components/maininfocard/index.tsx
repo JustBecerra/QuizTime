@@ -1,10 +1,31 @@
 "use client";
-import { Button, Center, Flex, TextInput, rem } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import {
+  Button,
+  Container,
+  Flex,
+  Title,
+  List,
+  rem,
+  Center,
+} from "@mantine/core";
+import {
+  IconBarbell,
+  IconClockHour5,
+  IconHelpOctagonFilled,
+} from "@tabler/icons-react";
+
 export const Maininfocard = () => {
-  const searchIcon = <IconSearch style={{ width: rem(16), height: rem(16) }} />;
+  const questionIcon = (
+    <IconHelpOctagonFilled style={{ width: rem(16), height: rem(16) }} />
+  );
+  const timeIcon = (
+    <IconClockHour5 style={{ width: rem(16), height: rem(16) }} />
+  );
+  const difficultyIcon = (
+    <IconBarbell style={{ width: rem(16), height: rem(16) }} />
+  );
   return (
-    <Flex
+    <Container
       bg="gray.0"
       w="100%"
       h="80vh"
@@ -13,23 +34,23 @@ export const Maininfocard = () => {
         borderRadius: "2.5rem",
       }}
     >
-      <Center>
-        <TextInput
-          w="65%"
-          radius="xl"
-          placeholder="Search"
-          c="gray.0"
-          leftSectionPointerEvents="none"
-          leftSection={searchIcon}
-          styles={{
-            input: {
-              background: "white",
-              border: "transparent",
-            },
-          }}
-        />
-      </Center>
-      <Button>Start Quiz</Button>
-    </Flex>
+      <Flex direction="column" justify="space-evenly" h="80%">
+        <Title order={1} c="deepBlue.4">
+          Test your knowledge
+        </Title>
+        <List size="lg" withPadding>
+          <List.Item icon={questionIcon} c="gray.9">
+            10 questions
+          </List.Item>
+          <List.Item icon={timeIcon} c="gray.9">
+            30 seconds per question
+          </List.Item>
+          <List.Item icon={difficultyIcon} c="gray.9">
+            questions vary on difficulty
+          </List.Item>
+        </List>
+        <Button>Start Quiz</Button>
+      </Flex>
+    </Container>
   );
 };

@@ -7,9 +7,6 @@ export const Header = () => {
       <Title order={1} c="gray.0">
         Fun Quiz
       </Title>
-      <Title order={3} c="gray.0">
-        User
-      </Title>
     </Container>
   );
 };
