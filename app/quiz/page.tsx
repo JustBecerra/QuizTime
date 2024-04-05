@@ -11,7 +11,15 @@ const Quiz = () => {
     async function fetchQuestions() {
       try {
         const data = await getQuestions();
-        setQuizData(data);
+        console.log({ data });
+        for (let i = data.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [data[i], data[j]] = [data[j], data[i]];
+        }
+
+        const randomizedData = data.slice(0, 10);
+        setQuizData(randomizedData);
+        console.log({ quizData });
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
@@ -19,6 +27,7 @@ const Quiz = () => {
 
     fetchQuestions();
   }, []);
+
   return (
     <Flex
       bg="gray.0"
@@ -40,18 +49,11 @@ const Quiz = () => {
             },
           }}
         >
-          <Stepper.Step>
-            <QuizStepContent />
-          </Stepper.Step>
-          <Stepper.Step>2</Stepper.Step>
-          <Stepper.Step>3</Stepper.Step>
-          <Stepper.Step>4</Stepper.Step>
-          <Stepper.Step>5</Stepper.Step>
-          <Stepper.Step>6</Stepper.Step>
-          <Stepper.Step>7</Stepper.Step>
-          <Stepper.Step>8</Stepper.Step>
-          <Stepper.Step>9</Stepper.Step>
-          <Stepper.Step>10</Stepper.Step>
+          {quizData?.map((quiz, index) => (
+            <Stepper.Step key={index}>
+              <QuizStepContent quiz={quiz} />
+            </Stepper.Step>
+          ))}
         </Stepper>
       </Container>
     </Flex>

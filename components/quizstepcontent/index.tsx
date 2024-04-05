@@ -1,10 +1,14 @@
 import { Button, Container, Title } from "@mantine/core";
 import { IconLetterA } from "@tabler/icons-react";
 
-export const QuizStepContent = () => {
+interface QuizStepContentProps {
+  quiz: Questions;
+}
+
+export const QuizStepContent: React.FC<QuizStepContentProps> = (quiz) => {
   return (
     <Container>
-      <Title>When did Napoleon die?</Title>
+      <Title>{quiz.quiz.question.Text}</Title>
       <Button leftSection={<IconLetterA size={14} />} variant="default">
         Gallery
       </Button>
