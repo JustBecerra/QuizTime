@@ -6,6 +6,7 @@ import {
   IconHelpOctagonFilled,
 } from "@tabler/icons-react";
 import { theme } from "../../theme";
+import Link from "next/link";
 
 export const Maininfocard = () => {
   const questionIcon = (
@@ -53,7 +54,9 @@ export const Maininfocard = () => {
             Questions vary on difficulty
           </List.Item>
         </List>
-        <Button>Start Quiz</Button>
+        <Link href={"quiz"}>
+          <Button>Start Quiz</Button>
+        </Link>
       </Flex>
     </Flex>
   );

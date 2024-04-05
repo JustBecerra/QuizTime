@@ -1,6 +1,6 @@
 import "@mantine/core/styles.css";
 import React from "react";
-import { MantineProvider, ColorSchemeScript } from "@mantine/core";
+import { MantineProvider, ColorSchemeScript, Flex } from "@mantine/core";
 import { theme } from "../theme";
 
 export const metadata = {
@@ -15,7 +15,20 @@ export default function RootLayout({ children }: { children: any }) {
         <ColorSchemeScript />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <Flex
+            direction={"column"}
+            gap={20}
+            style={{
+              background: "linear-gradient(135deg, #3550DC, #27E9F7)",
+              height: "100vh",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            {children}
+          </Flex>
+        </MantineProvider>
       </body>
     </html>
   );
