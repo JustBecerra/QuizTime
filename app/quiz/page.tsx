@@ -29,7 +29,7 @@ const Quiz = () => {
     <Flex
       bg="gray.0"
       w={{ base: "80%", md: "50%" }}
-      h="65vh"
+      h={{ base: "80%", md: "70%" }}
       style={{
         borderRadius: "2.5rem",
       }}
@@ -43,6 +43,7 @@ const Quiz = () => {
             flexWrap: "nowrap",
             marginTop: "2rem",
             width: "90%",
+            height: "4rem",
             overflowX: "auto",
             overflowY: "hidden",
           },

@@ -1,5 +1,4 @@
 import { Button, Flex, Title } from "@mantine/core";
-
 import { useEffect, useState } from "react";
 import { letterArray } from "../../helper/letterstorage";
 
@@ -24,10 +23,13 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (quiz) => {
 
   return (
     <Flex mt="3rem" justify="center" align="center" direction="column">
-      <Title c="gray.9" size="2rem">
+      <Title c="gray.9" size="1.75rem" visibleFrom="md" mx="md">
         {quiz.quiz.question.text}
       </Title>
-      <Flex direction="column" mt="lg" gap="2rem" w="100%" align="center">
+      <Title c="gray.9" size="1.25rem" hiddenFrom="md" mx="md">
+        {quiz.quiz.question.text}
+      </Title>
+      <Flex direction="column" mt="3rem" gap="2rem" w="100%" align="center">
         {answers.map((answer, key) => (
           <Button
             key={key}
