@@ -34,7 +34,8 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (quiz) => {
           <Button
             key={key}
             leftSection={letterArray[key]}
-            variant="default"
+            variant="gradient"
+            gradient={{ from: "#3550DC", to: "#27E9F7", deg: 90 }}
             h={{ base: "2rem", md: "3rem" }}
             w="50%"
           >
