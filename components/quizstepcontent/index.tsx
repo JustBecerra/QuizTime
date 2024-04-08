@@ -1,4 +1,4 @@
-import { Button, Container, Title } from "@mantine/core";
+import { Button, Container, Flex, Title } from "@mantine/core";
 import { useRandomInsert } from "../../CustomHooks";
 import { useEffect } from "react";
 import { letterArray } from "../../helper/letterstorage";
@@ -12,13 +12,21 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (quiz) => {
   useEffect(() => insertRandomly(quiz.quiz.correctAnswer), []);
 
   return (
-    <Container>
-      <Title>{quiz.quiz.question.text}</Title>
-      {array.map((answer, key) => (
-        <Button key={key} leftSection={letterArray[key]} variant="default">
-          {answer}
-        </Button>
-      ))}
-    </Container>
+    <Flex mt="3rem" justify="center" align="center" direction="column">
+      <Title c="gray.9">{quiz.quiz.question.text}</Title>
+      <Flex direction="column" mt="lg" gap="2rem" w="100%" align="center">
+        {array.map((answer, key) => (
+          <Button
+            key={key}
+            leftSection={letterArray[key]}
+            variant="default"
+            h="3rem"
+            w="50%"
+          >
+            {answer}
+          </Button>
+        ))}
+      </Flex>
+    </Flex>
   );
 };
