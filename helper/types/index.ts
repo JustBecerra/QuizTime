@@ -1,5 +1,5 @@
 type QuestionText = {
-  Text: string;
+  text: string;
 };
 
 type Questions = {

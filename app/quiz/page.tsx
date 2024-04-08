@@ -18,8 +18,8 @@ const Quiz = () => {
         }
 
         const randomizedData = data.slice(0, 10);
+        console.log({ randomizedData });
         setQuizData(randomizedData);
-        console.log({ quizData });
       } catch (error) {
         console.error("Failed to fetch data:", error);
       }
