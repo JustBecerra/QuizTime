@@ -1,5 +1,5 @@
 "use client";
-import { Flex, Stepper } from "@mantine/core";
+import { Button, Flex, Stepper, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../../api/route";
 import { QuizStepContent } from "../../components/quizstepcontent";
@@ -57,7 +57,15 @@ const Quiz = () => {
       >
         {quizData?.map((quiz, index) => (
           <Stepper.Step key={index}>
-            <QuizStepContent quiz={quiz} />
+            <QuizStepContent quiz={quiz} setActive={setActive} />
+            <Stepper.Completed>
+              <Text>
+                Quiz done! click on the home button or try again if you feel
+                like it.
+              </Text>
+              <Button>Home</Button>
+              <Button>Play again</Button>
+            </Stepper.Completed>
           </Stepper.Step>
         ))}
       </Stepper>
