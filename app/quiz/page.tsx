@@ -7,6 +7,20 @@ import { QuizStepContent } from "../../components/quizstepcontent";
 const Quiz = () => {
   const [quizData, setQuizData] = useState<Questions[]>();
   const [active, setActive] = useState(0);
+  const [degrees, setDegrees] = useState(0);
+  let intervalId: NodeJS.Timeout;
+
+  const handleMouseOver = () => {
+    intervalId = setInterval(() => {
+      setDegrees((degrees) => degrees + 1);
+    }, 10);
+  };
+
+  const handleMouseOut = () => {
+    clearInterval(intervalId);
+    setDegrees(0);
+  };
+
   useEffect(() => {
     async function fetchQuestions() {
       try {
@@ -58,16 +72,35 @@ const Quiz = () => {
         {quizData?.map((quiz, index) => (
           <Stepper.Step key={index}>
             <QuizStepContent quiz={quiz} setActive={setActive} />
-            <Stepper.Completed>
-              <Text>
-                Quiz done! click on the home button or try again if you feel
-                like it.
-              </Text>
-              <Button>Home</Button>
-              <Button>Play again</Button>
-            </Stepper.Completed>
           </Stepper.Step>
         ))}
+        <Stepper.Completed>
+          <Flex
+            direction="column"
+            m="auto"
+            h="16rem"
+            w="16rem"
+            justify="flex-end"
+            gap="lg"
+          >
+            <Text c="gray.9">
+              Quiz done! click on the home button or try again if you feel like
+              it.
+            </Text>
+            <Text c="gray.9">7/10 placeholder</Text>
+            <Flex gap="lg">
+              <Button>Home</Button>
+              <Button
+                variant="gradient"
+                onMouseOver={handleMouseOver}
+                onMouseOut={handleMouseOut}
+                gradient={{ from: "pink", to: "cyan", deg: degrees }}
+              >
+                Play again
+              </Button>
+            </Flex>
+          </Flex>
+        </Stepper.Completed>
       </Stepper>
     </Flex>
   );
