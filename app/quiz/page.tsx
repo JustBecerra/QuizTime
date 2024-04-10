@@ -1,12 +1,5 @@
 "use client";
-import {
-  Button,
-  Flex,
-  LoadingOverlay,
-  Skeleton,
-  Stepper,
-  Text,
-} from "@mantine/core";
+import { Button, Flex, LoadingOverlay, Stepper, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../../api/route";
 import { QuizStepContent } from "../../components/quizstepcontent";

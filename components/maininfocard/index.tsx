@@ -5,7 +5,6 @@ import {
   IconClockHour5,
   IconHelpOctagonFilled,
 } from "@tabler/icons-react";
-import { theme } from "../../theme";
 import Link from "next/link";
 
 export const Maininfocard = () => {
