@@ -1,8 +1,16 @@
 "use client";
-import { Button, Flex, Stepper, Text } from "@mantine/core";
+import {
+  Button,
+  Flex,
+  LoadingOverlay,
+  Skeleton,
+  Stepper,
+  Text,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../../api/route";
 import { QuizStepContent } from "../../components/quizstepcontent";
+import Link from "next/link";
 
 const Quiz = () => {
   const [quizData, setQuizData] = useState<Questions[]>();
@@ -48,6 +56,11 @@ const Quiz = () => {
         borderRadius: "2.5rem",
       }}
     >
+      <LoadingOverlay
+        visible={quizData ? false : true}
+        zIndex={1000}
+        overlayProps={{ radius: "sm", blur: 2 }}
+      />
       <Stepper
         active={active}
         onStepClick={setActive}
@@ -63,6 +76,7 @@ const Quiz = () => {
           },
           root: {
             width: "100%",
+            height: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -89,11 +103,14 @@ const Quiz = () => {
             </Text>
             <Text c="gray.9">7/10 placeholder</Text>
             <Flex gap="lg">
-              <Button>Home</Button>
+              <Link href={"/"}>
+                <Button>Home</Button>
+              </Link>
               <Button
                 variant="gradient"
                 onMouseOver={handleMouseOver}
                 onMouseOut={handleMouseOut}
+                onClick={() => setActive(0)}
                 gradient={{ from: "pink", to: "cyan", deg: degrees }}
               >
                 Play again
