@@ -25,12 +25,11 @@ export const Timer = () => {
       <RingProgress
         label={
           <Text size="xs" ta="center">
-            {/* Time left: {Math.trunc(time / 3)} */}
             Time left: {time}
           </Text>
         }
         roundCaps
-        sections={[{ value: time, color: color }]}
+        sections={[{ value: (time / 30) * 100, color: color }]}
       />
     </Center>
   );
