@@ -1,4 +1,5 @@
 import { Center, RingProgress, Text } from "@mantine/core";
+import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface props {
@@ -14,10 +15,12 @@ export const Timer = (props: props) => {
       setTime((prevTime) => {
         if (prevTime <= 0) {
           clearInterval(interval);
+          if (time === 0) redirect("/");
           return 0;
         }
         return prevTime - 1;
       });
+
       if (time < 20) setColor("yellow");
       if (time < 10) setColor("red");
     }, 1000);
@@ -27,6 +30,7 @@ export const Timer = (props: props) => {
 
   useEffect(() => {
     setTime(30);
+    setColor("green");
   }, [active]);
   return (
     <Center>

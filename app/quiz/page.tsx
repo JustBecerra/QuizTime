@@ -1,10 +1,18 @@
 "use client";
-import { Button, Flex, LoadingOverlay, Stepper, Text } from "@mantine/core";
+import {
+  Button,
+  Flex,
+  LoadingOverlay,
+  Stepper,
+  Text,
+  rem,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../../api/route";
 import { QuizStepContent } from "../../components/quizstepcontent";
 import Link from "next/link";
 import { Timer } from "../../components/timer";
+import { IconX } from "@tabler/icons-react";
 
 const Quiz = () => {
   const [quizData, setQuizData] = useState<Questions[]>();
