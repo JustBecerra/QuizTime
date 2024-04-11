@@ -5,12 +5,13 @@ import { letterArray } from "../../helper/letterstorage";
 interface QuizStepContentProps {
   quiz: Questions;
   setActive: Dispatch<SetStateAction<number>>;
+  answerChosen: boolean;
+  setAnswerChosen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
-  const { quiz, setActive } = props;
+  const { quiz, setActive, answerChosen, setAnswerChosen } = props;
   const [answers, setAnswers] = useState<string[]>([]);
-  const [answerChosen, setAnswerChosen] = useState(false);
 
   useEffect(() => {
     const randomIndex = Math.floor(

@@ -18,6 +18,7 @@ const Quiz = () => {
   const [quizData, setQuizData] = useState<Questions[]>();
   const [active, setActive] = useState(0);
   const [degrees, setDegrees] = useState(0);
+  const [answerChosen, setAnswerChosen] = useState(false);
   let intervalId: NodeJS.Timeout;
 
   const handleMouseOver = () => {
@@ -50,7 +51,7 @@ const Quiz = () => {
   }, []);
   return (
     <>
-      {active < 10 && <Timer active={active} />}
+      {active < 10 && <Timer active={active} answerChosen={answerChosen} />}
       <Flex
         bg="gray.0"
         w={{ base: "80%", md: "50%" }}
@@ -88,7 +89,12 @@ const Quiz = () => {
         >
           {quizData?.map((quiz, index) => (
             <Stepper.Step key={index}>
-              <QuizStepContent quiz={quiz} setActive={setActive} />
+              <QuizStepContent
+                quiz={quiz}
+                setActive={setActive}
+                setAnswerChosen={setAnswerChosen}
+                answerChosen={answerChosen}
+              />
             </Stepper.Step>
           ))}
           <Stepper.Completed>

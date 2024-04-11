@@ -4,21 +4,25 @@ import { useEffect, useState } from "react";
 
 interface props {
   active: number;
+  answerChosen: boolean;
 }
 
 export const Timer = (props: props) => {
   const [time, setTime] = useState(30);
   const [color, setColor] = useState("green");
-  const { active } = props;
+  const { active, answerChosen } = props;
   useEffect(() => {
     const interval = setInterval(() => {
       setTime((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(interval);
-          if (time === 0) redirect("/");
-          return 0;
+        if (!answerChosen) {
+          if (prevTime <= 0) {
+            clearInterval(interval);
+            if (time === 0) redirect("/");
+            return 0;
+          }
+          return prevTime - 1;
         }
-        return prevTime - 1;
+        return prevTime;
       });
 
       if (time < 20) setColor("yellow");
@@ -26,7 +30,7 @@ export const Timer = (props: props) => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [time]);
+  }, [answerChosen, time]);
 
   useEffect(() => {
     setTime(30);
