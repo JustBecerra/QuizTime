@@ -1,13 +1,5 @@
 "use client";
-import {
-  Button,
-  Center,
-  Flex,
-  LoadingOverlay,
-  RingProgress,
-  Stepper,
-  Text,
-} from "@mantine/core";
+import { Button, Flex, LoadingOverlay, Stepper, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../../api/route";
 import { QuizStepContent } from "../../components/quizstepcontent";
@@ -48,10 +40,9 @@ const Quiz = () => {
 
     fetchQuestions();
   }, []);
-
   return (
     <>
-      <Timer />
+      {active < 10 && <Timer active={active} />}
       <Flex
         bg="gray.0"
         w={{ base: "80%", md: "50%" }}

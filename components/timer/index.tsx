@@ -1,10 +1,14 @@
 import { Center, RingProgress, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
-export const Timer = () => {
+interface props {
+  active: number;
+}
+
+export const Timer = (props: props) => {
   const [time, setTime] = useState(30);
   const [color, setColor] = useState("green");
-
+  const { active } = props;
   useEffect(() => {
     const interval = setInterval(() => {
       setTime((prevTime) => {
@@ -20,6 +24,10 @@ export const Timer = () => {
 
     return () => clearInterval(interval);
   }, [time]);
+
+  useEffect(() => {
+    setTime(30);
+  }, [active]);
   return (
     <Center>
       <RingProgress
