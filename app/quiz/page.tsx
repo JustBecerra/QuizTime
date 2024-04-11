@@ -1,13 +1,24 @@
 "use client";
-import { Button, Flex, Stepper, Text } from "@mantine/core";
+import {
+  Button,
+  Flex,
+  LoadingOverlay,
+  Stepper,
+  Text,
+  rem,
+} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../../api/route";
 import { QuizStepContent } from "../../components/quizstepcontent";
+import Link from "next/link";
+import { Timer } from "../../components/timer";
+import { IconX } from "@tabler/icons-react";
 
 const Quiz = () => {
   const [quizData, setQuizData] = useState<Questions[]>();
   const [active, setActive] = useState(0);
   const [degrees, setDegrees] = useState(0);
+  const [answerChosen, setAnswerChosen] = useState(false);
   let intervalId: NodeJS.Timeout;
 
   const handleMouseOver = () => {
@@ -38,71 +49,87 @@ const Quiz = () => {
 
     fetchQuestions();
   }, []);
-
   return (
-    <Flex
-      bg="gray.0"
-      w={{ base: "80%", md: "50%" }}
-      h={{ base: "80%", md: "70%" }}
-      style={{
-        borderRadius: "2.5rem",
-      }}
-    >
-      <Stepper
-        active={active}
-        onStepClick={setActive}
-        allowNextStepsSelect={false}
-        styles={{
-          steps: {
-            flexWrap: "nowrap",
-            marginTop: "2rem",
-            width: "90%",
-            height: "4rem",
-            overflowX: "auto",
-            overflowY: "hidden",
-          },
-          root: {
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          },
+    <>
+      {active < 10 && <Timer active={active} answerChosen={answerChosen} />}
+      <Flex
+        bg="gray.0"
+        w={{ base: "80%", md: "50%" }}
+        h={{ base: "80%", md: "70%" }}
+        style={{
+          borderRadius: "2.5rem",
         }}
       >
-        {quizData?.map((quiz, index) => (
-          <Stepper.Step key={index}>
-            <QuizStepContent quiz={quiz} setActive={setActive} />
-          </Stepper.Step>
-        ))}
-        <Stepper.Completed>
-          <Flex
-            direction="column"
-            m="auto"
-            h="16rem"
-            w="16rem"
-            justify="flex-end"
-            gap="lg"
-          >
-            <Text c="gray.9">
-              Quiz done! click on the home button or try again if you feel like
-              it.
-            </Text>
-            <Text c="gray.9">7/10 placeholder</Text>
-            <Flex gap="lg">
-              <Button>Home</Button>
-              <Button
-                variant="gradient"
-                onMouseOver={handleMouseOver}
-                onMouseOut={handleMouseOut}
-                gradient={{ from: "pink", to: "cyan", deg: degrees }}
-              >
-                Play again
-              </Button>
+        <LoadingOverlay
+          visible={!quizData}
+          zIndex={1000}
+          overlayProps={{ radius: "sm", blur: 2 }}
+        />
+        <Stepper
+          active={active}
+          onStepClick={setActive}
+          allowNextStepsSelect={false}
+          styles={{
+            steps: {
+              flexWrap: "nowrap",
+              marginTop: "2rem",
+              width: "90%",
+              height: "4rem",
+              overflowX: "auto",
+              overflowY: "hidden",
+            },
+            root: {
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            },
+          }}
+        >
+          {quizData?.map((quiz, index) => (
+            <Stepper.Step key={index}>
+              <QuizStepContent
+                quiz={quiz}
+                setActive={setActive}
+                setAnswerChosen={setAnswerChosen}
+                answerChosen={answerChosen}
+              />
+            </Stepper.Step>
+          ))}
+          <Stepper.Completed>
+            <Flex
+              direction="column"
+              m="auto"
+              h="16rem"
+              w="16rem"
+              justify="flex-end"
+              gap="lg"
+            >
+              <Text c="gray.9">
+                Quiz done! click on the home button or try again if you feel
+                like it.
+              </Text>
+              <Text c="gray.9">7/10 placeholder</Text>
+              <Flex gap="lg">
+                <Link href={"/"}>
+                  <Button>Home</Button>
+                </Link>
+                <Button
+                  variant="gradient"
+                  onMouseOver={handleMouseOver}
+                  onMouseOut={handleMouseOut}
+                  onClick={() => setActive(0)}
+                  gradient={{ from: "pink", to: "cyan", deg: degrees }}
+                >
+                  Play again
+                </Button>
+              </Flex>
             </Flex>
-          </Flex>
-        </Stepper.Completed>
-      </Stepper>
-    </Flex>
+          </Stepper.Completed>
+        </Stepper>
+      </Flex>
+    </>
   );
 };
 
