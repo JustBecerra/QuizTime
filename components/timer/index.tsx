@@ -39,12 +39,25 @@ export const Timer = (props: props) => {
   return (
     <Center>
       <RingProgress
+        size={120}
+        visibleFrom="sm"
         label={
-          <Text size="xs" ta="center">
-            Time left: {time}
+          <Text size="lg" ta="center">
+            {time}
           </Text>
         }
         roundCaps
+        sections={[{ value: (time / 30) * 100, color: color }]}
+      />
+      <RingProgress
+        size={80}
+        label={
+          <Text size="xs" ta="center">
+            {time}
+          </Text>
+        }
+        roundCaps
+        hiddenFrom="sm"
         sections={[{ value: (time / 30) * 100, color: color }]}
       />
     </Center>
