@@ -1,23 +1,23 @@
 import { Flex, Text } from "@mantine/core";
-import Image from "next/image";
-import devgif from "../../public/programmergif.gif";
+import Link from "next/link";
+
 export const Footer = () => {
   return (
     <Flex
       align="center"
       direction={{ base: "column", md: "row" }}
-      mb="1rem"
+      my="1rem"
       gap="1rem"
     >
-      <Image src={devgif} width={100} height={100} alt={""} />
-      <Flex direction="column" align="center" justify="center">
-        <Text c="gray.0">Developed by an awesome developer</Text>
-        <Flex gap="xs" justify="center" align="center">
-          <Text c="gray.0">Data provided by </Text>
-          <Text c="pink" size="lg" td="underline" fw={700}>
+      <Flex gap="xs" align="center">
+        <Text c="gray.0" ta="center">
+          Data provided by{" "}
+        </Text>
+        <Link href="https://the-trivia-api.com" target="_blank">
+          <Text c="pink" size="lg" ta="center" td="underline" fw={700}>
             The Trivia API
           </Text>
-        </Flex>
+        </Link>
       </Flex>
     </Flex>
   );
