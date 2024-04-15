@@ -3,6 +3,7 @@ import React from "react";
 import { MantineProvider, ColorSchemeScript, Flex } from "@mantine/core";
 import { theme } from "../theme";
 import { Footer } from "../components/footer";
+import { QuizProvider } from "../context/QuizProvider";
 
 export const metadata = {
   title: "Fun History Quiz",
@@ -17,19 +18,21 @@ export default function RootLayout({ children }: { children: any }) {
       </head>
       <body>
         <MantineProvider theme={theme}>
-          <Flex
-            direction={"column"}
-            gap={10}
-            style={{
-              background: "linear-gradient(135deg, #3550DC, #27E9F7)",
-              height: "100vh",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {children}
-            <Footer />
-          </Flex>
+          <QuizProvider>
+            <Flex
+              direction={"column"}
+              gap={10}
+              style={{
+                background: "linear-gradient(135deg, #3550DC, #27E9F7)",
+                height: "100vh",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {children}
+              <Footer />
+            </Flex>
+          </QuizProvider>
         </MantineProvider>
       </body>
     </html>

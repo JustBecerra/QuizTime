@@ -1,3 +1,4 @@
+"use client";
 import {
   Dispatch,
   ReactElement,
@@ -7,14 +8,9 @@ import {
   useState,
 } from "react";
 
-interface answersType {
-  id: number;
-  result: boolean;
-}
-
 interface QuizProps {
-  answerResults: answersType[];
-  setAnswerResults: Dispatch<SetStateAction<answersType[]>>;
+  answerResults: boolean[];
+  setAnswerResults: Dispatch<SetStateAction<boolean[]>>;
 }
 
 const QuizContext = createContext<QuizProps>({} as QuizProps);
@@ -23,8 +19,10 @@ type QuizProviderProps = {
   children: ReactElement;
 };
 
+const initialState: boolean[] = new Array(10).fill(false);
+
 export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
-  const [answerResults, setAnswerResults] = useState<answersType[]>([]);
+  const [answerResults, setAnswerResults] = useState<boolean[]>(initialState);
   return (
     <QuizContext.Provider
       value={{
