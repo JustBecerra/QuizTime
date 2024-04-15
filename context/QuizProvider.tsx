@@ -8,9 +8,14 @@ import {
   useState,
 } from "react";
 
+type answersType = {
+  id: number;
+  result: boolean;
+};
+
 interface QuizProps {
-  answerResults: boolean[];
-  setAnswerResults: Dispatch<SetStateAction<boolean[]>>;
+  answerResults: answersType[];
+  setAnswerResults: Dispatch<SetStateAction<answersType[]>>;
 }
 
 const QuizContext = createContext<QuizProps>({} as QuizProps);
@@ -19,10 +24,14 @@ type QuizProviderProps = {
   children: ReactElement;
 };
 
-const initialState: boolean[] = new Array(10).fill(false);
+const initialState: answersType[] = Array.from({ length: 10 }, (_, id) => ({
+  id,
+  result: false,
+}));
 
 export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
-  const [answerResults, setAnswerResults] = useState<boolean[]>(initialState);
+  const [answerResults, setAnswerResults] =
+    useState<answersType[]>(initialState);
   return (
     <QuizContext.Provider
       value={{

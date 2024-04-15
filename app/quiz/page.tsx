@@ -22,7 +22,7 @@ const Quiz = () => {
   const [answerChosen, setAnswerChosen] = useState(false);
   const { answerResults } = useQuizContext();
   let intervalId: NodeJS.Timeout;
-  console.log({ answerResults });
+
   const handleMouseOver = () => {
     intervalId = setInterval(() => {
       setDegrees((degrees) => degrees + 1);
@@ -92,14 +92,14 @@ const Quiz = () => {
           {quizData.map((quiz, index) => (
             <Stepper.Step
               key={index}
-              color={answerResults[index] ? "green" : "red"}
+              color={answerResults[index].result ? "green" : "red"}
               completedIcon={
-                answerResults[index] ? (
+                answerResults[index].result ? (
                   <IconCircleCheck
-                    style={{ width: rem(18), height: rem(18) }}
+                    style={{ width: rem(24), height: rem(24) }}
                   />
                 ) : (
-                  <IconCircleX style={{ width: rem(20), height: rem(20) }} />
+                  <IconCircleX style={{ width: rem(24), height: rem(24) }} />
                 )
               }
             >
@@ -108,6 +108,7 @@ const Quiz = () => {
                 setActive={setActive}
                 setAnswerChosen={setAnswerChosen}
                 answerChosen={answerChosen}
+                index={index}
               />
             </Stepper.Step>
           ))}

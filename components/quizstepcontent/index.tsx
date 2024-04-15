@@ -1,17 +1,20 @@
 import { Button, Flex, Title } from "@mantine/core";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { letterArray } from "../../helper/letterstorage";
+import { useQuizContext } from "../../context/QuizProvider";
 
 interface QuizStepContentProps {
   quiz: Questions;
   setActive: Dispatch<SetStateAction<number>>;
   answerChosen: boolean;
   setAnswerChosen: Dispatch<SetStateAction<boolean>>;
+  index: number;
 }
 
 export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
-  const { quiz, setActive, answerChosen, setAnswerChosen } = props;
+  const { quiz, setActive, answerChosen, setAnswerChosen, index } = props;
   const [answers, setAnswers] = useState<string[]>([]);
+  const { setAnswerResults } = useQuizContext();
 
   useEffect(() => {
     const randomIndex = Math.floor(
@@ -40,6 +43,22 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
     setAnswerChosen(false);
   };
 
+  const CheckAnswer = (answer: string) => {
+    setAnswerChosen(true);
+    setAnswerResults((prevResults) => {
+      const updatedResults = [...prevResults];
+      if (answer === quiz.correctAnswer && index === updatedResults[index].id) {
+        updatedResults[index].result = true;
+      } else if (
+        answer !== quiz.correctAnswer &&
+        index === updatedResults[index].id
+      ) {
+        updatedResults[index].result = false;
+      }
+      return updatedResults;
+    });
+  };
+
   return (
     <Flex
       mt="3rem"
@@ -55,15 +74,15 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
         {quiz.question.text}
       </Title>
       <Flex direction="column" mt="3rem" gap="2rem" w="100%" align="center">
-        {answers.map((answer, key) => (
+        {answers.map((answer, index) => (
           <Button
-            key={key}
-            leftSection={letterArray[key]}
+            key={index}
+            leftSection={letterArray[index]}
             variant="filled"
             color={colorSelection(answer)}
             h={{ base: "2rem", md: "3rem" }}
             w="50%"
-            onClick={() => setAnswerChosen(true)}
+            onClick={() => CheckAnswer(answer)}
           >
             {answer}
           </Button>
