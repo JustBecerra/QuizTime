@@ -12,13 +12,15 @@ import { getQuestions } from "../../api/route";
 import { QuizStepContent } from "../../components/quizstepcontent";
 import Link from "next/link";
 import { Timer } from "../../components/timer";
-import { IconX } from "@tabler/icons-react";
+import { IconCircleCheck, IconCircleX } from "@tabler/icons-react";
+import { useQuizContext } from "../../context/QuizProvider";
 
 const Quiz = () => {
-  const [quizData, setQuizData] = useState<Questions[]>();
+  const [quizData, setQuizData] = useState<Questions[]>([]);
   const [active, setActive] = useState(0);
   const [degrees, setDegrees] = useState(0);
   const [answerChosen, setAnswerChosen] = useState(false);
+  const { answerResults } = useQuizContext();
   let intervalId: NodeJS.Timeout;
 
   const handleMouseOver = () => {
@@ -87,13 +89,26 @@ const Quiz = () => {
             },
           }}
         >
-          {quizData?.map((quiz, index) => (
-            <Stepper.Step key={index}>
+          {quizData.map((quiz, index) => (
+            <Stepper.Step
+              key={index}
+              color={answerResults[index].result ? "green" : "red"}
+              completedIcon={
+                answerResults[index].result ? (
+                  <IconCircleCheck
+                    style={{ width: rem(24), height: rem(24) }}
+                  />
+                ) : (
+                  <IconCircleX style={{ width: rem(24), height: rem(24) }} />
+                )
+              }
+            >
               <QuizStepContent
                 quiz={quiz}
                 setActive={setActive}
                 setAnswerChosen={setAnswerChosen}
                 answerChosen={answerChosen}
+                index={index}
               />
             </Stepper.Step>
           ))}
