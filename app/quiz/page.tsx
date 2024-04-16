@@ -1,38 +1,18 @@
 "use client";
-import {
-  Button,
-  Flex,
-  LoadingOverlay,
-  Stepper,
-  Text,
-  rem,
-} from "@mantine/core";
+import { Flex, LoadingOverlay, Stepper, rem } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { getQuestions } from "../../api/route";
 import { QuizStepContent } from "../../components/quizstepcontent";
-import Link from "next/link";
 import { Timer } from "../../components/timer";
 import { IconCircleCheck, IconCircleX } from "@tabler/icons-react";
 import { useQuizContext } from "../../context/QuizProvider";
+import { QuizComplete } from "../../components/quizcomplete";
 
 const Quiz = () => {
   const [quizData, setQuizData] = useState<Questions[]>([]);
   const [active, setActive] = useState(0);
-  const [degrees, setDegrees] = useState(0);
   const [answerChosen, setAnswerChosen] = useState(false);
   const { answerResults } = useQuizContext();
-  let intervalId: NodeJS.Timeout;
-
-  const handleMouseOver = () => {
-    intervalId = setInterval(() => {
-      setDegrees((degrees) => degrees + 1);
-    }, 10);
-  };
-
-  const handleMouseOut = () => {
-    clearInterval(intervalId);
-    setDegrees(0);
-  };
 
   useEffect(() => {
     async function fetchQuestions() {
@@ -87,6 +67,10 @@ const Quiz = () => {
               flexDirection: "column",
               alignItems: "center",
             },
+            content: {
+              paddingTop: 0,
+              margin: "auto",
+            },
           }}
         >
           {quizData.map((quiz, index) => (
@@ -113,34 +97,7 @@ const Quiz = () => {
             </Stepper.Step>
           ))}
           <Stepper.Completed>
-            <Flex
-              direction="column"
-              m="auto"
-              h="16rem"
-              w="16rem"
-              justify="flex-end"
-              gap="lg"
-            >
-              <Text c="gray.9">
-                Quiz done! click on the home button or try again if you feel
-                like it.
-              </Text>
-              <Text c="gray.9">7/10 placeholder</Text>
-              <Flex gap="lg">
-                <Link href={"/"}>
-                  <Button>Home</Button>
-                </Link>
-                <Button
-                  variant="gradient"
-                  onMouseOver={handleMouseOver}
-                  onMouseOut={handleMouseOut}
-                  onClick={() => setActive(0)}
-                  gradient={{ from: "pink", to: "cyan", deg: degrees }}
-                >
-                  Play again
-                </Button>
-              </Flex>
-            </Flex>
+            <QuizComplete setActive={setActive} answerResults={answerResults} />
           </Stepper.Completed>
         </Stepper>
       </Flex>
