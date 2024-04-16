@@ -69,6 +69,7 @@ const Quiz = () => {
             },
             content: {
               paddingTop: 0,
+              margin: "auto",
             },
           }}
         >
@@ -96,7 +97,7 @@ const Quiz = () => {
             </Stepper.Step>
           ))}
           <Stepper.Completed>
-            <QuizComplete setActive={setActive} />
+            <QuizComplete setActive={setActive} answerResults={answerResults} />
           </Stepper.Completed>
         </Stepper>
       </Flex>

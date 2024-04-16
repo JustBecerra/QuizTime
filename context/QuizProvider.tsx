@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 
-type answersType = {
+export type answersType = {
   id: number;
   result: boolean;
 };
