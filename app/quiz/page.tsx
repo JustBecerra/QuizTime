@@ -67,6 +67,9 @@ const Quiz = () => {
               flexDirection: "column",
               alignItems: "center",
             },
+            content: {
+              paddingTop: 0,
+            },
           }}
         >
           {quizData.map((quiz, index) => (

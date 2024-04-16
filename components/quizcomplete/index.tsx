@@ -21,14 +21,7 @@ export const QuizComplete = (props: props) => {
     setDegrees(0);
   };
   return (
-    <Flex
-      direction="column"
-      m="auto"
-      h="16rem"
-      w="16rem"
-      justify="flex-end"
-      gap="lg"
-    >
+    <Flex direction="column" h="16rem" w="16rem" gap="lg">
       <Text c="gray.9">
         Quiz done! click on the home button or try again if you feel like it.
       </Text>
