@@ -53,7 +53,7 @@ export const QuizComplete = (props: props) => {
       <Text c={resultNumberColor()} fw={700} size="4rem">
         {results}/10
       </Text>
-      <Text c="gray.9" ta="center">
+      <Text c="gray.9" fs="italic" ta="center">
         {resultText()}
       </Text>
 
