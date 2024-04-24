@@ -1,4 +1,4 @@
-import { Button, Flex, Title } from "@mantine/core";
+import { Button, Flex, Title, Text } from "@mantine/core";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { letterArray } from "../../helper/letterstorage";
 import { useQuizContext } from "../../context/QuizProvider";
@@ -61,7 +61,7 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
 
   return (
     <Flex
-      mt="3rem"
+      mt="2rem"
       justify="center"
       align="center"
       direction="column"
@@ -80,11 +80,16 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
             leftSection={letterArray[index]}
             variant="filled"
             color={colorSelection(answer)}
-            h={{ base: "2rem", md: "3rem" }}
-            w="50%"
+            h={{ base: "2rem", md: "4rem" }}
+            w="60%"
             onClick={() => CheckAnswer(answer)}
           >
-            {answer}
+            <Text
+              size="1rem"
+              style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}
+            >
+              {answer}
+            </Text>
           </Button>
         ))}
       </Flex>
