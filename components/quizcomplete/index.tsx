@@ -1,7 +1,7 @@
 import { Button, Flex, Text } from "@mantine/core";
 import Link from "next/link";
-import { Dispatch, SetStateAction, useState } from "react";
-import { answersType } from "../../context/QuizProvider";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import QuizContext, { answersType } from "../../context/QuizProvider";
 
 interface props {
   setActive: Dispatch<SetStateAction<number>>;
@@ -11,6 +11,7 @@ interface props {
 export const QuizComplete = (props: props) => {
   const { setActive, answerResults } = props;
   const [degrees, setDegrees] = useState(0);
+  const { fetchQuestions } = useContext(QuizContext);
   let intervalId: NodeJS.Timeout;
   const handleMouseOver = () => {
     intervalId = setInterval(() => {
@@ -41,6 +42,10 @@ export const QuizComplete = (props: props) => {
       return "red.0";
     }
   };
+
+  const handlePlayAgain = async () => {
+    await fetchQuestions().then(() => setActive(0));
+  };
   return (
     <Flex
       direction="column"
@@ -65,7 +70,7 @@ export const QuizComplete = (props: props) => {
           variant="gradient"
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
-          onClick={() => setActive(0)}
+          onClick={handlePlayAgain}
           gradient={{ from: "pink", to: "cyan", deg: degrees }}
         >
           Play again
