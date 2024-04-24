@@ -1,32 +1,38 @@
 "use client";
-import { Flex, Stepper, rem } from "@mantine/core";
+import { Flex, LoadingOverlay, Stepper, rem } from "@mantine/core";
 import { IconCircleCheck, IconCircleX } from "@tabler/icons-react";
 import { QuizStepContent } from "../quizstepcontent";
 import { QuizComplete } from "../quizcomplete";
-import { useState } from "react";
+import { Suspense } from "react";
 import { useQuizContext } from "../../context/QuizProvider";
-import { Timer } from "../timer";
 
-interface QuizDataInt {
-  quizData: Questions[];
-}
-
-export const QuizStepper = (props: QuizDataInt) => {
-  const { quizData } = props;
-  const [active, setActive] = useState(0);
-  const [answerChosen, setAnswerChosen] = useState(false);
-  const { answerResults } = useQuizContext();
+export const QuizStepper = () => {
+  const {
+    answerResults,
+    quizData,
+    active,
+    setActive,
+    answerChosen,
+    setAnswerChosen,
+  } = useQuizContext();
 
   return (
-    <>
-      {active < 10 && <Timer active={active} answerChosen={answerChosen} />}
-      <Flex
-        bg="gray.0"
-        w={{ base: "80%", md: "50%" }}
-        h={{ base: "80%", md: "70%" }}
-        style={{
-          borderRadius: "2.5rem",
-        }}
+    <Flex
+      bg="gray.0"
+      w={{ base: "80%", md: "50%" }}
+      h={{ base: "80%", md: "70%" }}
+      style={{
+        borderRadius: "2.5rem",
+      }}
+    >
+      <Suspense
+        fallback={
+          <LoadingOverlay
+            visible={!quizData}
+            zIndex={1000}
+            overlayProps={{ radius: "sm", blur: 2 }}
+          />
+        }
       >
         <Stepper
           active={active}
@@ -50,7 +56,10 @@ export const QuizStepper = (props: QuizDataInt) => {
             },
             content: {
               paddingTop: 0,
-              margin: "auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "2rem",
             },
           }}
         >
@@ -81,7 +90,7 @@ export const QuizStepper = (props: QuizDataInt) => {
             <QuizComplete setActive={setActive} answerResults={answerResults} />
           </Stepper.Completed>
         </Stepper>
-      </Flex>
-    </>
+      </Suspense>
+    </Flex>
   );
 };
