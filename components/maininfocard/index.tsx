@@ -6,8 +6,11 @@ import {
   IconHelpOctagonFilled,
 } from "@tabler/icons-react";
 import Link from "next/link";
+import { useContext, useEffect } from "react";
+import QuizContext from "../../context/QuizProvider";
 
 export const Maininfocard = () => {
+  const { handlePlayAgain } = useContext(QuizContext);
   const questionIcon = (
     <IconHelpOctagonFilled style={{ width: rem(24), height: rem(24) }} />
   );
@@ -17,6 +20,9 @@ export const Maininfocard = () => {
   const difficultyIcon = (
     <IconBarbell style={{ width: rem(24), height: rem(24) }} />
   );
+  useEffect(() => {
+    handlePlayAgain();
+  }, []);
   return (
     <Flex
       bg="gray.0"

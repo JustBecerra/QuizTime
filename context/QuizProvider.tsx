@@ -24,6 +24,7 @@ interface QuizProps {
   setActive: Dispatch<SetStateAction<number>>;
   answerChosen: boolean;
   setAnswerChosen: Dispatch<SetStateAction<boolean>>;
+  handlePlayAgain: () => Promise<void>;
 }
 
 const QuizContext = createContext<QuizProps>({} as QuizProps);
@@ -59,6 +60,10 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
     }
   }
 
+  const handlePlayAgain = async () => {
+    await fetchQuestions().then(() => setActive(0));
+  };
+
   useEffect(() => {
     fetchQuestions();
   }, []);
@@ -74,6 +79,7 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
         setActive,
         answerChosen,
         setAnswerChosen,
+        handlePlayAgain,
       }}
     >
       {children}
@@ -91,6 +97,7 @@ export const useQuizContext = (): QuizProps => {
     setActive,
     answerChosen,
     setAnswerChosen,
+    handlePlayAgain,
   } = useContext(QuizContext);
   return {
     answerResults,
@@ -101,6 +108,7 @@ export const useQuizContext = (): QuizProps => {
     setActive,
     answerChosen,
     setAnswerChosen,
+    handlePlayAgain,
   };
 };
 

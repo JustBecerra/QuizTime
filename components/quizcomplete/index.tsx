@@ -9,9 +9,9 @@ interface props {
 }
 
 export const QuizComplete = (props: props) => {
-  const { setActive, answerResults } = props;
+  const { answerResults } = props;
   const [degrees, setDegrees] = useState(0);
-  const { fetchQuestions } = useContext(QuizContext);
+  const { handlePlayAgain } = useContext(QuizContext);
   let intervalId: NodeJS.Timeout;
   const handleMouseOver = () => {
     intervalId = setInterval(() => {
@@ -43,9 +43,6 @@ export const QuizComplete = (props: props) => {
     }
   };
 
-  const handlePlayAgain = async () => {
-    await fetchQuestions().then(() => setActive(0));
-  };
   return (
     <Flex
       direction="column"
