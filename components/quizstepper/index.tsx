@@ -57,9 +57,9 @@ export const QuizStepper = () => {
             content: {
               paddingTop: 0,
               display: "flex",
+              flex: 1,
               alignItems: "center",
               justifyContent: "center",
-              marginTop: "2rem",
             },
           }}
         >
