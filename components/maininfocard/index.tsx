@@ -1,5 +1,14 @@
 "use client";
-import { Button, Flex, Title, rem, Accordion, Text } from "@mantine/core";
+import {
+  Button,
+  Flex,
+  Title,
+  rem,
+  Accordion,
+  Text,
+  Modal,
+  TextInput,
+} from "@mantine/core";
 import {
   IconBarbell,
   IconClockHour5,
@@ -8,9 +17,11 @@ import {
 import Link from "next/link";
 import { useContext, useEffect } from "react";
 import QuizContext from "../../context/QuizProvider";
+import { useDisclosure } from "@mantine/hooks";
 
 export const Maininfocard = () => {
   const { handlePlayAgain } = useContext(QuizContext);
+  const [opened, { open, close }] = useDisclosure(false);
   const questionIcon = (
     <IconHelpOctagonFilled
       style={{
@@ -93,9 +104,22 @@ export const Maininfocard = () => {
             </Accordion.Panel>
           </Accordion.Item>
         </Accordion>
-        <Link href={"quiz"}>
-          <Button>Start Quiz</Button>
-        </Link>
+        <Flex gap="lg">
+          <Link href={"quiz"}>
+            <Button>Start Quiz</Button>
+          </Link>
+          <Button onClick={open}>Submit Question</Button>
+        </Flex>
+        <Modal opened={opened} onClose={close} title="New Question" centered>
+          <Flex direction="column" gap="md">
+            <TextInput label="Question" />
+            <TextInput label="Correct Answer" />
+            <TextInput label="Wrong answer #1" />
+            <TextInput label="Wrong answer #2" />
+            <TextInput label="Wrong answer #3" />
+            <Button>Send</Button>
+          </Flex>
+        </Modal>
       </Flex>
     </Flex>
   );
