@@ -1,14 +1,5 @@
 "use client";
-import {
-  Button,
-  Flex,
-  Title,
-  rem,
-  Accordion,
-  Text,
-  Modal,
-  TextInput,
-} from "@mantine/core";
+import { Button, Flex, Title, rem, Accordion, Text } from "@mantine/core";
 import {
   IconBarbell,
   IconClockHour5,
@@ -16,7 +7,7 @@ import {
   IconHelpOctagonFilled,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import QuizContext from "../../context/QuizProvider";
 import { useDisclosure } from "@mantine/hooks";
 import { SubmitModal } from "../submitmodal";
@@ -24,6 +15,7 @@ import { SubmitModal } from "../submitmodal";
 export const Maininfocard = () => {
   const { handlePlayAgain } = useContext(QuizContext);
   const [opened, { open, close }] = useDisclosure(false);
+  const [accordionOpen, setAccordionOpen] = useState<string[]>([]);
   const questionIcon = (
     <IconHelpOctagonFilled
       style={{
@@ -54,6 +46,7 @@ export const Maininfocard = () => {
   useEffect(() => {
     handlePlayAgain();
   }, []);
+
   return (
     <Flex
       bg="gray.0"
@@ -74,14 +67,22 @@ export const Maininfocard = () => {
         <Title order={1} c="deepBlue.4" fs="italic">
           Test your knowledge
         </Title>
-        <Accordion w="60%" variant="contained" radius="lg">
+        <Accordion
+          w="60%"
+          variant="contained"
+          radius="lg"
+          multiple
+          value={accordionOpen}
+          onChange={setAccordionOpen}
+        >
           <Accordion.Item value="Questions">
             <Accordion.Control icon={questionIcon}>
               <Text>Questions</Text>
             </Accordion.Control>
             <Accordion.Panel>
               <Text size="sm">
-                Contains 10 questions provided by the trivia API and users.
+                Contains 10 questions provided by the trivia API and other
+                users.
               </Text>
             </Accordion.Panel>
           </Accordion.Item>
