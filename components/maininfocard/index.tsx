@@ -12,12 +12,14 @@ import {
 import {
   IconBarbell,
   IconClockHour5,
+  IconHelpOctagon,
   IconHelpOctagonFilled,
 } from "@tabler/icons-react";
 import Link from "next/link";
 import { useContext, useEffect } from "react";
 import QuizContext from "../../context/QuizProvider";
 import { useDisclosure } from "@mantine/hooks";
+import { SubmitModal } from "../submitmodal";
 
 export const Maininfocard = () => {
   const { handlePlayAgain } = useContext(QuizContext);
@@ -106,20 +108,30 @@ export const Maininfocard = () => {
         </Accordion>
         <Flex gap="lg">
           <Link href={"quiz"}>
-            <Button>Start Quiz</Button>
+            <Button
+              styles={{
+                root: {
+                  boxShadow: "0px 0px 5px 2px #888888",
+                },
+              }}
+            >
+              Start Quiz
+            </Button>
           </Link>
-          <Button onClick={open}>Submit Question</Button>
+          <Button
+            onClick={open}
+            leftSection={<IconHelpOctagon size={20} />}
+            color="green"
+            styles={{
+              root: {
+                boxShadow: "0px 0px 5px 2px #888888",
+              },
+            }}
+          >
+            Submit Question
+          </Button>
         </Flex>
-        <Modal opened={opened} onClose={close} title="New Question" centered>
-          <Flex direction="column" gap="md">
-            <TextInput label="Question" />
-            <TextInput label="Correct Answer" />
-            <TextInput label="Wrong answer #1" />
-            <TextInput label="Wrong answer #2" />
-            <TextInput label="Wrong answer #3" />
-            <Button>Send</Button>
-          </Flex>
-        </Modal>
+        <SubmitModal opened={opened} close={close} />
       </Flex>
     </Flex>
   );
