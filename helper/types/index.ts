@@ -14,3 +14,11 @@ type Questions = {
   incorrectAnswers: string[];
   type: string;
 };
+
+type SubmitQuestionType = {
+  question: string;
+  correctAnswer: string;
+  wrongAnswer1: string;
+  wrongAnswer2: string;
+  wrongAnswer3: string;
+};

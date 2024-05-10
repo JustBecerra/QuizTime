@@ -1,17 +1,10 @@
 import { Button, Flex, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { postQuestion } from "../../api/route";
 
 type SubmitModalProps = {
   opened: boolean;
   close: () => void;
-};
-
-type SubmitQuestionType = {
-  question: string;
-  correctAnswer: string;
-  wrongAnswer1: string;
-  wrongAnswer2: string;
-  wrongAnswer3: string;
 };
 
 export const SubmitModal = (props: SubmitModalProps) => {
@@ -34,22 +27,22 @@ export const SubmitModal = (props: SubmitModalProps) => {
     },
   });
 
-  const handleSubmit = (values: SubmitQuestionType) => {
+  const handleSubmit = async (values: SubmitQuestionType) => {
     Form.validate();
     if (Form.isValid()) {
-      //send request
-      console.log({ values });
+      await postQuestion(values);
     }
   };
   return (
     <Modal opened={opened} onClose={close} title="New Question" centered>
-      <Flex direction="column" gap="md">
-        <form onSubmit={Form.onSubmit((values) => handleSubmit(values))}>
+      <form onSubmit={Form.onSubmit((values) => handleSubmit(values))}>
+        <Flex direction="column" gap="md" align="center">
           <TextInput
             withAsterisk
             key={Form.key("question")}
             radius="lg"
             label="Question"
+            w="100%"
             {...Form.getInputProps("question")}
           />
           <TextInput
@@ -57,6 +50,7 @@ export const SubmitModal = (props: SubmitModalProps) => {
             key={Form.key("correctAnswer")}
             radius="lg"
             label="Correct answer"
+            w="100%"
             {...Form.getInputProps("correctAnswer")}
           />
           <TextInput
@@ -64,6 +58,7 @@ export const SubmitModal = (props: SubmitModalProps) => {
             key={Form.key("wrongAnswer1")}
             radius="lg"
             label="Wrong answer #1"
+            w="100%"
             {...Form.getInputProps("wrongAnswer1")}
           />
           <TextInput
@@ -71,6 +66,7 @@ export const SubmitModal = (props: SubmitModalProps) => {
             key={Form.key("wrongAnswer2")}
             radius="lg"
             label="Wrong answer #2"
+            w="100%"
             {...Form.getInputProps("wrongAnswer2")}
           />
           <TextInput
@@ -78,13 +74,14 @@ export const SubmitModal = (props: SubmitModalProps) => {
             key={Form.key("wrongAnswer3")}
             radius="lg"
             label="Wrong answer #3"
+            w="100%"
             {...Form.getInputProps("wrongAnswer3")}
           />
-          <Button type="submit" variant="light">
-            Send
+          <Button type="submit" variant="light" w="50%">
+            Submit
           </Button>
-        </form>
-      </Flex>
+        </Flex>
+      </form>
     </Modal>
   );
 };
