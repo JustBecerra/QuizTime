@@ -9,6 +9,7 @@ export async function getQuestions() {
 
 export async function postQuestion(data: SubmitQuestionType) {
   try {
+    console.log({ data });
     const res = await fetch("http://localhost:8080/userquestion", {
       method: "POST",
       headers: {
@@ -19,5 +20,18 @@ export async function postQuestion(data: SubmitQuestionType) {
     const result = await res.json();
   } catch {
     throw new Error("Failed to post data");
+  }
+}
+
+export async function getUserQuestions() {
+  try {
+    const res = await fetch("http://localhost:8080/userquestions");
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    const result = await res.json();
+    return result;
+  } catch {
+    throw new Error("Failed to fetch data");
   }
 }
