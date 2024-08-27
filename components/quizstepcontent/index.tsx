@@ -15,7 +15,7 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
   const { quiz, setActive, answerChosen, setAnswerChosen, index } = props;
   const [answers, setAnswers] = useState<string[]>([]);
   const { setAnswerResults } = useQuizContext();
-
+  console.log({ answers });
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * (quiz.incorrectAnswers.length + 1));
     const newArray = [...quiz.incorrectAnswers.slice(0, randomIndex), quiz.correctAnswer, ...quiz.incorrectAnswers.slice(randomIndex)];

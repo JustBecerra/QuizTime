@@ -40,9 +40,8 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
     try {
       const data = await getQuestions();
       let UserQuestions = await getUserQuestions();
-      UserQuestions.incorrectAnswers = [UserQuestions.wronganswer1, UserQuestions.wronganswer2, UserQuestions.wronganswer3];
       data.push(...UserQuestions);
-      console.log({ data });
+      console.log({ UserQuestions });
       for (let i = data.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [data[i], data[j]] = [data[j], data[i]];
