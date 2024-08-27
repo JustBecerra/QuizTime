@@ -1,7 +1,8 @@
 import { Button, Flex, Modal, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { postQuestion } from "../../api/route";
-
+import { Bounce, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 type SubmitModalProps = {
   opened: boolean;
   close: () => void;
@@ -24,9 +25,36 @@ export const SubmitModal = (props: SubmitModalProps) => {
   });
 
   const handleSubmit = async (values: typeof Form.values) => {
-    Form.validate();
-    if (Form.isValid()) {
-      await postQuestion(values);
+    try {
+      Form.validate();
+      if (Form.isValid()) {
+        await postQuestion(values);
+      }
+      toast.success("Question Submitted!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+      close();
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      toast.error("Error submitting question!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
     }
   };
 
