@@ -51,13 +51,28 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
   };
 
   return (
-    <Flex justify="center" align="center" direction="column" gap="2rem">
-      <Title c="gray.9" size="1.75rem" visibleFrom="md" mx="md">
-        {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
-      </Title>
-      <Title c="gray.9" size="1.25rem" hiddenFrom="md" mx="md">
-        {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
-      </Title>
+    <Flex justify="center" w="100%" h="100%" align="center" direction="column" gap="2rem">
+      <Flex justify="center" align="center" direction="column">
+        <Title c="gray.9" size="1.5rem" visibleFrom="md" mx="md">
+          {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
+        </Title>
+        {quiz.question && (
+          <Text c="gray.9" visibleFrom="md" size="1rem">
+            User submitted question
+          </Text>
+        )}
+      </Flex>
+      <Flex>
+        <Title c="gray.9" size="1rem" hiddenFrom="md" mx="md">
+          {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
+        </Title>
+        {quiz.question && (
+          <Text c="gray.9" hiddenFrom="md" size="0.5rem">
+            User submitted question
+          </Text>
+        )}
+      </Flex>
+
       <Flex direction="column" gap="2rem" w="100%" align="center">
         {answers.map((answer, index) => (
           <Button
@@ -65,21 +80,22 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
             leftSection={letterArray[index]}
             variant="filled"
             color={colorSelection(answer)}
-            h={{ base: "2rem", md: "4rem" }}
-            w={{ base: "80%", md: "60%" }}
+            h={{ base: "5rem", md: "4rem" }}
+            w={{ base: "90%", md: "60%" }}
             onClick={() => CheckAnswer(answer)}
           >
-            <Text size="1rem" style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
+            <Text size="1rem" visibleFrom="md" truncate="end" style={{ whiteSpace: "pre-wrap", wordWrap: "break-word", lineHeight: "1.25rem" }}>
+              {answer}
+            </Text>
+            <Text size="0.75rem" truncate="end" hiddenFrom="md" style={{ whiteSpace: "pre-wrap", wordWrap: "break-word", lineHeight: "1rem" }}>
               {answer}
             </Text>
           </Button>
         ))}
       </Flex>
-      {answerChosen && (
-        <Button onClick={nextQuestion} mb="1rem">
-          Next
-        </Button>
-      )}
+      <Button disabled={!answerChosen} onClick={nextQuestion} mb="1rem">
+        Next
+      </Button>
     </Flex>
   );
 };
