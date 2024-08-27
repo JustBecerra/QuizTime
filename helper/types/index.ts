@@ -9,7 +9,7 @@ type Questions = {
   difficulty: string;
   regions: string[];
   isNiche: boolean;
-  question: QuestionText;
+  question: QuestionText | string;
   correctAnswer: string;
   incorrectAnswers: string[];
   type: string;

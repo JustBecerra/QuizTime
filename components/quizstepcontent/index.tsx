@@ -15,7 +15,7 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
   const { quiz, setActive, answerChosen, setAnswerChosen, index } = props;
   const [answers, setAnswers] = useState<string[]>([]);
   const { setAnswerResults } = useQuizContext();
-  console.log({ answers });
+  console.log({ quiz });
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * (quiz.incorrectAnswers.length + 1));
     const newArray = [...quiz.incorrectAnswers.slice(0, randomIndex), quiz.correctAnswer, ...quiz.incorrectAnswers.slice(randomIndex)];
@@ -53,10 +53,10 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
   return (
     <Flex justify="center" align="center" direction="column" gap="2rem">
       <Title c="gray.9" size="1.75rem" visibleFrom="md" mx="md">
-        {quiz.question.text}
+        {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
       </Title>
       <Title c="gray.9" size="1.25rem" hiddenFrom="md" mx="md">
-        {quiz.question.text}
+        {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
       </Title>
       <Flex direction="column" gap="2rem" w="100%" align="center">
         {answers.map((answer, index) => (
