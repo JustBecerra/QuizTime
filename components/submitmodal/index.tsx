@@ -9,42 +9,32 @@ type SubmitModalProps = {
 
 export const SubmitModal = (props: SubmitModalProps) => {
   const { opened, close } = props;
+
   const Form = useForm({
-    mode: "uncontrolled",
     initialValues: {
       question: "",
       correctAnswer: "",
-      wrongAnswer1: "",
-      wrongAnswer2: "",
-      wrongAnswer3: "",
+      incorrectAnswers: ["", "", ""],
     },
     validate: {
-      question: (value) => value[value.length - 1] !== "?",
-      correctAnswer: (value) => value.length === 0,
-      wrongAnswer1: (value) => value.length === 0,
-      wrongAnswer2: (value) => value.length === 0,
-      wrongAnswer3: (value) => value.length === 0,
+      question: (value) => (value[value.length - 1] !== "?" ? 'Question should end with a "?"' : null),
+      correctAnswer: (value) => (value.length === 0 ? "Correct answer is required" : null),
+      incorrectAnswers: (value) => (value.some((answer) => answer.length === 0) ? "All incorrect answers are required" : null),
     },
   });
 
-  const handleSubmit = async (values: SubmitQuestionType) => {
+  const handleSubmit = async (values: typeof Form.values) => {
     Form.validate();
     if (Form.isValid()) {
       await postQuestion(values);
     }
   };
+
   return (
     <Modal opened={opened} onClose={close} title="New Question" centered>
       <form onSubmit={Form.onSubmit((values) => handleSubmit(values))}>
         <Flex direction="column" gap="md" align="center">
-          <TextInput
-            withAsterisk
-            key={Form.key("question")}
-            radius="lg"
-            label="Question"
-            w="100%"
-            {...Form.getInputProps("question")}
-          />
+          <TextInput withAsterisk key={Form.key("question")} radius="lg" label="Question" w="100%" {...Form.getInputProps("question")} />
           <TextInput
             withAsterisk
             key={Form.key("correctAnswer")}
@@ -53,30 +43,16 @@ export const SubmitModal = (props: SubmitModalProps) => {
             w="100%"
             {...Form.getInputProps("correctAnswer")}
           />
-          <TextInput
-            withAsterisk
-            key={Form.key("wrongAnswer1")}
-            radius="lg"
-            label="Wrong answer #1"
-            w="100%"
-            {...Form.getInputProps("wrongAnswer1")}
-          />
-          <TextInput
-            withAsterisk
-            key={Form.key("wrongAnswer2")}
-            radius="lg"
-            label="Wrong answer #2"
-            w="100%"
-            {...Form.getInputProps("wrongAnswer2")}
-          />
-          <TextInput
-            withAsterisk
-            key={Form.key("wrongAnswer3")}
-            radius="lg"
-            label="Wrong answer #3"
-            w="100%"
-            {...Form.getInputProps("wrongAnswer3")}
-          />
+          {Form.values.incorrectAnswers.map((_, index) => (
+            <TextInput
+              withAsterisk
+              key={Form.key(`incorrectAnswers.${index}`)}
+              radius="lg"
+              label={`Wrong answer #${index + 1}`}
+              w="100%"
+              {...Form.getInputProps(`incorrectAnswers.${index}`)}
+            />
+          ))}
           <Button type="submit" variant="light" w="50%">
             Submit
           </Button>

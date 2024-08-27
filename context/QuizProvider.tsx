@@ -1,14 +1,6 @@
 "use client";
-import {
-  Dispatch,
-  ReactElement,
-  SetStateAction,
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { getQuestions } from "../api/route";
+import { Dispatch, ReactElement, SetStateAction, createContext, useContext, useEffect, useState } from "react";
+import { getQuestions, getUserQuestions } from "../api/route";
 
 export type answersType = {
   id: number;
@@ -39,8 +31,7 @@ const initialState: answersType[] = Array.from({ length: 10 }, (_, id) => ({
 }));
 
 export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
-  const [answerResults, setAnswerResults] =
-    useState<answersType[]>(initialState);
+  const [answerResults, setAnswerResults] = useState<answersType[]>(initialState);
   const [quizData, setQuizData] = useState<Questions[]>([]);
   const [active, setActive] = useState(0);
   const [answerChosen, setAnswerChosen] = useState(false);
@@ -48,6 +39,8 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
   async function fetchQuestions() {
     try {
       const data = await getQuestions();
+      let UserQuestions = await getUserQuestions();
+      data.push(...UserQuestions);
       for (let i = data.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [data[i], data[j]] = [data[j], data[i]];
@@ -88,17 +81,8 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
 };
 
 export const useQuizContext = (): QuizProps => {
-  const {
-    answerResults,
-    setAnswerResults,
-    fetchQuestions,
-    quizData,
-    active,
-    setActive,
-    answerChosen,
-    setAnswerChosen,
-    handlePlayAgain,
-  } = useContext(QuizContext);
+  const { answerResults, setAnswerResults, fetchQuestions, quizData, active, setActive, answerChosen, setAnswerChosen, handlePlayAgain } =
+    useContext(QuizContext);
   return {
     answerResults,
     setAnswerResults,

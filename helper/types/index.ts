@@ -9,7 +9,7 @@ type Questions = {
   difficulty: string;
   regions: string[];
   isNiche: boolean;
-  question: QuestionText;
+  question: QuestionText | string;
   correctAnswer: string;
   incorrectAnswers: string[];
   type: string;
@@ -18,7 +18,5 @@ type Questions = {
 type SubmitQuestionType = {
   question: string;
   correctAnswer: string;
-  wrongAnswer1: string;
-  wrongAnswer2: string;
-  wrongAnswer3: string;
+  incorrectAnswers: string[];
 };

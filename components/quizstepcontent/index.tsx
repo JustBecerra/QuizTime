@@ -17,14 +17,8 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
   const { setAnswerResults } = useQuizContext();
 
   useEffect(() => {
-    const randomIndex = Math.floor(
-      Math.random() * (quiz.incorrectAnswers.length + 1)
-    );
-    const newArray = [
-      ...quiz.incorrectAnswers.slice(0, randomIndex),
-      quiz.correctAnswer,
-      ...quiz.incorrectAnswers.slice(randomIndex),
-    ];
+    const randomIndex = Math.floor(Math.random() * (quiz.incorrectAnswers.length + 1));
+    const newArray = [...quiz.incorrectAnswers.slice(0, randomIndex), quiz.correctAnswer, ...quiz.incorrectAnswers.slice(randomIndex)];
     setAnswers(newArray);
   }, [quiz.correctAnswer, quiz.incorrectAnswers]);
 
@@ -49,10 +43,7 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
       const updatedResults = [...prevResults];
       if (answer === quiz.correctAnswer && index === updatedResults[index].id) {
         updatedResults[index].result = true;
-      } else if (
-        answer !== quiz.correctAnswer &&
-        index === updatedResults[index].id
-      ) {
+      } else if (answer !== quiz.correctAnswer && index === updatedResults[index].id) {
         updatedResults[index].result = false;
       }
       return updatedResults;
@@ -62,10 +53,10 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
   return (
     <Flex justify="center" align="center" direction="column" gap="2rem">
       <Title c="gray.9" size="1.75rem" visibleFrom="md" mx="md">
-        {quiz.question.text}
+        {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
       </Title>
       <Title c="gray.9" size="1.25rem" hiddenFrom="md" mx="md">
-        {quiz.question.text}
+        {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
       </Title>
       <Flex direction="column" gap="2rem" w="100%" align="center">
         {answers.map((answer, index) => (
@@ -78,10 +69,7 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
             w={{ base: "80%", md: "60%" }}
             onClick={() => CheckAnswer(answer)}
           >
-            <Text
-              size="1rem"
-              style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}
-            >
+            <Text size="1rem" style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
               {answer}
             </Text>
           </Button>
