@@ -9,7 +9,6 @@ export async function getQuestions() {
 
 export async function postQuestion(data: SubmitQuestionType) {
   try {
-    console.log({ data });
     const res = await fetch("http://localhost:8080/userquestion", {
       method: "POST",
       headers: {
