@@ -1,17 +1,13 @@
 "use client";
 import { Button, Flex, Title, rem, Accordion, Text } from "@mantine/core";
-import {
-  IconBarbell,
-  IconClockHour5,
-  IconHelpOctagon,
-  IconHelpOctagonFilled,
-} from "@tabler/icons-react";
+import { IconBarbell, IconClockHour5, IconHelpOctagon, IconHelpOctagonFilled } from "@tabler/icons-react";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import QuizContext from "../../context/QuizProvider";
 import { useDisclosure } from "@mantine/hooks";
 import { SubmitModal } from "../submitmodal";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export const Maininfocard = () => {
   const { handlePlayAgain } = useContext(QuizContext);
   const [opened, { open, close }] = useDisclosure(false);
@@ -56,34 +52,18 @@ export const Maininfocard = () => {
         borderRadius: "2.5rem",
       }}
     >
-      <Flex
-        direction="column"
-        justify="center"
-        h="auto"
-        flex={1}
-        align="center"
-        gap="3rem"
-      >
+      <ToastContainer />
+      <Flex direction="column" justify="center" h="auto" flex={1} align="center" gap="3rem">
         <Title order={1} c="deepBlue.4" fs="italic">
           Test your knowledge
         </Title>
-        <Accordion
-          w="60%"
-          variant="contained"
-          radius="lg"
-          multiple
-          value={accordionOpen}
-          onChange={setAccordionOpen}
-        >
+        <Accordion w="60%" variant="contained" radius="lg" multiple value={accordionOpen} onChange={setAccordionOpen}>
           <Accordion.Item value="Questions">
             <Accordion.Control icon={questionIcon}>
               <Text>Questions</Text>
             </Accordion.Control>
             <Accordion.Panel>
-              <Text size="sm">
-                Contains 10 questions provided by the trivia API and other
-                users.
-              </Text>
+              <Text size="sm">Contains 10 questions provided by the trivia API and other users.</Text>
             </Accordion.Panel>
           </Accordion.Item>
 
@@ -92,9 +72,7 @@ export const Maininfocard = () => {
               <Text>Time</Text>
             </Accordion.Control>
             <Accordion.Panel>
-              <Text size="sm">
-                You&apos;ve got 30 seconds to answer per question.
-              </Text>
+              <Text size="sm">You&apos;ve got 30 seconds to answer per question.</Text>
             </Accordion.Panel>
           </Accordion.Item>
 
