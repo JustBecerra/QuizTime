@@ -17,15 +17,15 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
   const { setAnswerResults } = useQuizContext();
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * (quiz.incorrectAnswers.length + 1));
-    const newArray = [...quiz.incorrectAnswers.slice(0, randomIndex), quiz.correctAnswer, ...quiz.incorrectAnswers.slice(randomIndex)];
+    const randomIndex = Math.floor(Math.random() * (quiz.incorrectanswers.length + 1));
+    const newArray = [...quiz.incorrectanswers.slice(0, randomIndex), quiz.correctanswer, ...quiz.incorrectanswers.slice(randomIndex)];
     setAnswers(newArray);
-  }, [quiz.correctAnswer, quiz.incorrectAnswers]);
+  }, [quiz.correctanswer, quiz.incorrectanswers]);
 
   const colorSelection = (answer: string) => {
-    if (answer === quiz.correctAnswer && answerChosen) {
+    if (answer === quiz.correctanswer && answerChosen) {
       return "green";
-    } else if (answerChosen && answer !== quiz.correctAnswer) {
+    } else if (answerChosen && answer !== quiz.correctanswer) {
       return "red";
     } else {
       return "gray.9";
@@ -41,9 +41,9 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
     setAnswerChosen(true);
     setAnswerResults((prevResults) => {
       const updatedResults = [...prevResults];
-      if (answer === quiz.correctAnswer && index === updatedResults[index].id) {
+      if (answer === quiz.correctanswer && index === updatedResults[index].id) {
         updatedResults[index].result = true;
-      } else if (answer !== quiz.correctAnswer && index === updatedResults[index].id) {
+      } else if (answer !== quiz.correctanswer && index === updatedResults[index].id) {
         updatedResults[index].result = false;
       }
       return updatedResults;
@@ -56,7 +56,7 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
         <Title c="gray.9" size="1.5rem" visibleFrom="md" mx="md">
           {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
         </Title>
-        {quiz.question && (
+        {typeof quiz.question === "string" && (
           <Text c="gray.9" visibleFrom="md" size="1rem">
             User submitted question
           </Text>

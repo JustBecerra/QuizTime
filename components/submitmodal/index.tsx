@@ -14,13 +14,13 @@ export const SubmitModal = (props: SubmitModalProps) => {
   const Form = useForm({
     initialValues: {
       question: "",
-      correctAnswer: "",
-      incorrectAnswers: ["", "", ""],
+      correctanswer: "",
+      incorrectanswers: ["", "", ""],
     },
     validate: {
       question: (value) => (value[value.length - 1] !== "?" ? 'Question should end with a "?"' : null),
-      correctAnswer: (value) => (value.length === 0 ? "Correct answer is required" : null),
-      incorrectAnswers: (value) => (value.some((answer) => answer.length === 0) ? "All incorrect answers are required" : null),
+      correctanswer: (value) => (value.length === 0 ? "Correct answer is required" : null),
+      incorrectanswers: (value) => (value.some((answer) => answer.length === 0) ? "All incorrect answers are required" : null),
     },
   });
 
@@ -65,20 +65,20 @@ export const SubmitModal = (props: SubmitModalProps) => {
           <TextInput withAsterisk key={Form.key("question")} radius="lg" label="Question" w="100%" {...Form.getInputProps("question")} />
           <TextInput
             withAsterisk
-            key={Form.key("correctAnswer")}
+            key={Form.key("correctanswer")}
             radius="lg"
             label="Correct answer"
             w="100%"
-            {...Form.getInputProps("correctAnswer")}
+            {...Form.getInputProps("correctanswer")}
           />
-          {Form.values.incorrectAnswers.map((_, index) => (
+          {Form.values.incorrectanswers.map((_, index) => (
             <TextInput
               withAsterisk
-              key={Form.key(`incorrectAnswers.${index}`)}
+              key={Form.key(`incorrectanswers.${index}`)}
               radius="lg"
               label={`Wrong answer #${index + 1}`}
               w="100%"
-              {...Form.getInputProps(`incorrectAnswers.${index}`)}
+              {...Form.getInputProps(`incorrectanswers.${index}`)}
             />
           ))}
           <Button type="submit" variant="light" w="50%">
