@@ -10,13 +10,13 @@ type Questions = {
   regions: string[];
   isNiche: boolean;
   question: QuestionText | string;
-  correctAnswer: string;
-  incorrectAnswers: string[];
+  correctanswer: string;
+  incorrectanswers: string[];
   type: string;
 };
 
 type SubmitQuestionType = {
   question: string;
-  correctAnswer: string;
-  incorrectAnswers: string[];
+  correctanswer: string;
+  incorrectanswers: string[];
 };
