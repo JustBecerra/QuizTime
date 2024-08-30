@@ -1,5 +1,5 @@
 export async function getQuestions() {
-  const res = await fetch(`http://${process.env.BE_PRODUCTION}/questions?limit=50`);
+  const res = await fetch(`https://${process.env.BE_PRODUCTION}/questions?limit=50`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
@@ -9,7 +9,7 @@ export async function getQuestions() {
 
 export async function postQuestion(data: SubmitQuestionType) {
   try {
-    const res = await fetch(`http://${process.env.BE_PRODUCTION}/userquestion`, {
+    const res = await fetch(`https://${process.env.BE_PRODUCTION}/userquestion`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,7 +24,7 @@ export async function postQuestion(data: SubmitQuestionType) {
 
 export async function getUserQuestions() {
   try {
-    const res = await fetch(`http://${process.env.BE_PRODUCTION}/userquestions`);
+    const res = await fetch(`https://${process.env.BE_PRODUCTION}/userquestions`);
     if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
