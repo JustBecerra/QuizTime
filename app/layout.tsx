@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: any }) {
     <html lang="en">
       <head>
         <ColorSchemeScript />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body>
         <MantineProvider theme={theme}>
