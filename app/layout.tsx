@@ -22,10 +22,9 @@ export default function RootLayout({ children }: { children: any }) {
           <QuizProvider>
             <Flex
               direction={"column"}
-              gap={10}
               style={{
                 background: "linear-gradient(135deg, #3550DC, #27E9F7)",
-                height: "100vh",
+                minHeight: "100vh",
                 justifyContent: "center",
                 alignItems: "center",
               }}

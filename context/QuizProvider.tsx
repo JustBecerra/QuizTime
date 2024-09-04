@@ -10,7 +10,7 @@ export type answersType = {
 interface QuizProps {
   answerResults: answersType[];
   setAnswerResults: Dispatch<SetStateAction<answersType[]>>;
-  fetchQuestions: () => Promise<never[] | undefined>;
+  fetchQuestions: () => Promise<void>;
   quizData: Questions[];
   active: number;
   setActive: Dispatch<SetStateAction<number>>;
@@ -36,7 +36,7 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
   const [active, setActive] = useState(0);
   const [answerChosen, setAnswerChosen] = useState(false);
 
-  async function fetchQuestions() {
+  async function fetchQuestions(retryCount = 1) {
     try {
       const data = await getQuestions();
       let UserQuestions = await getUserQuestions();
@@ -49,16 +49,25 @@ export const QuizProvider: React.FC<QuizProviderProps> = ({ children }) => {
       setQuizData(randomizedData);
     } catch (error) {
       console.error("Failed to fetch data:", error);
-      return [];
+
+      if (retryCount < 3) {
+        // Retry up to 3 times
+        setTimeout(() => fetchQuestions(retryCount + 1), 1000);
+      }
     }
   }
 
   const handlePlayAgain = async () => {
-    await fetchQuestions().then(() => setActive(0));
+    await fetchQuestions();
+    setActive(0);
   };
 
   useEffect(() => {
-    fetchQuestions();
+    try {
+      fetchQuestions();
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
   }, []);
 
   return (
