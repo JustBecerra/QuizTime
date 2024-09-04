@@ -53,7 +53,7 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
   return (
     <Flex justify="center" w="100%" h="100%" align="center" direction="column" gap="2rem">
       <Flex justify="center" align="center" direction="column">
-        <Title c="gray.9" size="1.5rem" visibleFrom="md" mx="md">
+        <Title c="gray.9" size="1.5rem" visibleFrom="md" mx="md" mt="1rem">
           {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
         </Title>
         {typeof quiz.question === "string" && (
@@ -66,7 +66,7 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
         <Title c="gray.9" size="1rem" hiddenFrom="md" mx="md">
           {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
         </Title>
-        {quiz.question && (
+        {typeof quiz.question === "string" && (
           <Text c="gray.9" hiddenFrom="md" size="0.5rem">
             User submitted question
           </Text>
@@ -80,7 +80,7 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
             leftSection={letterArray[index]}
             variant="filled"
             color={colorSelection(answer)}
-            h={{ base: "5rem", md: "4rem" }}
+            h={{ base: "4rem" }}
             w={{ base: "90%", md: "60%" }}
             onClick={() => CheckAnswer(answer)}
           >
