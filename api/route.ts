@@ -1,5 +1,5 @@
 export async function getQuestions() {
-  const res = await fetch(`https://${process.env.BE_PRODUCTION}/questions?limit=50`);
+  const res = await fetch(`https://${process.env.BE_PRODUCTION}/questions?limit=10`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }

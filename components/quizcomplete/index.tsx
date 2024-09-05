@@ -5,11 +5,12 @@ import QuizContext, { answersType } from "../../context/QuizProvider";
 
 interface props {
   setActive: Dispatch<SetStateAction<number>>;
+  quizData: Questions[];
   answerResults: answersType[];
 }
 
 export const QuizComplete = (props: props) => {
-  const { answerResults } = props;
+  const { answerResults, quizData } = props;
   const [degrees, setDegrees] = useState(0);
   const { handlePlayAgain } = useContext(QuizContext);
   let intervalId: NodeJS.Timeout;
@@ -44,20 +45,23 @@ export const QuizComplete = (props: props) => {
   };
 
   return (
-    <Flex
-      direction="column"
-      h="16rem"
-      w="16rem"
-      gap="xl"
-      align="center"
-      justify="center"
-    >
-      <Text c={resultNumberColor()} fw={700} size="4rem">
-        {results}/10
-      </Text>
-      <Text c="gray.9" fs="italic" ta="center">
-        {resultText()}
-      </Text>
+    <Flex direction="column" h="16rem" w="16rem" gap="xl" align="center" justify="center">
+      {quizData.length > 0 ? (
+        <>
+          <Text c={resultNumberColor()} fw={700} size="4rem">
+            {results}/10
+          </Text>
+          <Text c="gray.9" fs="italic" ta="center">
+            {resultText()}
+          </Text>
+        </>
+      ) : (
+        <Flex w="50%" h="80%">
+          <Text span c={resultNumberColor()} fw={600} size="2rem">
+            Server is spinning up, give it a second or two.
+          </Text>
+        </Flex>
+      )}
 
       <Flex gap="lg">
         <Link href={"/"}>
