@@ -48,7 +48,7 @@ export const Maininfocard = () => {
       setLoading(true);
       router.push("quiz");
     } else {
-      toast.loading("The server is waking up! give it a second.", {
+      toast.loading("Loading fun questions.", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
