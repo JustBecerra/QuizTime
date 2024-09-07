@@ -42,6 +42,7 @@ export const SubmitModal = (props: SubmitModalProps) => {
         transition: Bounce,
       });
       close();
+      Form.reset();
     } catch (err) {
       console.error("Error submitting form:", err);
       toast.error("Error submitting question!", {
