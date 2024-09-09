@@ -11,7 +11,7 @@ export const QuizStepper = () => {
   const stepRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
-    if (stepRefs.current[active]) {
+    if (stepRefs.current[active] !== null) {
       stepRefs.current[active].scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [active]);
