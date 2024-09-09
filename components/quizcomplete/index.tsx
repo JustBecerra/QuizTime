@@ -47,12 +47,6 @@ export const QuizComplete = (props: props) => {
   return (
     <Flex direction="column" h="16rem" w="16rem" gap="xl" align="center" justify="center">
       {quizData.length > 0 ? (
-        <Flex w="100%" h="50%">
-          <Text w="100%" span c={resultNumberColor()} fw={600} size="1.5rem">
-            The server is loading, give it a second or two.
-          </Text>
-        </Flex>
-      ) : (
         <>
           <Text c={resultNumberColor()} fw={700} size="4rem">
             {results}/10
@@ -60,6 +54,14 @@ export const QuizComplete = (props: props) => {
           <Text c="gray.9" fs="italic" ta="center">
             {resultText()}
           </Text>
+        </>
+      ) : (
+        <>
+          <Flex w="100%" h="50%">
+            <Text w="100%" span c={resultNumberColor()} fw={600} size="1.5rem">
+              The server is loading, give it a second or two.
+            </Text>
+          </Flex>
         </>
       )}
 
