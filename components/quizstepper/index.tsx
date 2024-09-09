@@ -4,10 +4,18 @@ import { IconCircleCheck, IconCircleX } from "@tabler/icons-react";
 import { QuizStepContent } from "../quizstepcontent";
 import { QuizComplete } from "../quizcomplete";
 import { useQuizContext } from "../../context/QuizProvider";
+import { useEffect, useRef } from "react";
 
 export const QuizStepper = () => {
   const { answerResults, quizData, active, setActive, answerChosen, setAnswerChosen } = useQuizContext();
+  const stepRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+  useEffect(() => {
+    const currentStep = stepRefs.current[active];
+    if (currentStep) {
+      currentStep.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [active]);
   return (
     <Flex
       bg="gray.0"
@@ -51,6 +59,8 @@ export const QuizStepper = () => {
           <Stepper.Step
             key={index}
             color={answerResults[index].result ? "green" : "red"}
+            ref={(el) => (stepRefs.current[index] = el)}
+            allowStepSelect={false}
             completedIcon={
               answerResults[index].result ? (
                 <IconCircleCheck style={{ width: rem(24), height: rem(24) }} />
