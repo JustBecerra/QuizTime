@@ -1,4 +1,3 @@
-import { Button, Flex, Text } from "@mantine/core";
 import Link from "next/link";
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import QuizContext, { answersType } from "../../context/QuizProvider";
@@ -14,6 +13,7 @@ export const QuizComplete = (props: props) => {
   const [degrees, setDegrees] = useState(0);
   const { handlePlayAgain } = useContext(QuizContext);
   let intervalId: NodeJS.Timeout;
+
   const handleMouseOver = () => {
     intervalId = setInterval(() => {
       setDegrees((degrees) => degrees + 1);
@@ -24,7 +24,9 @@ export const QuizComplete = (props: props) => {
     clearInterval(intervalId);
     setDegrees(0);
   };
+
   const results = answerResults.filter((res) => res.result).length;
+
   const resultText = () => {
     if (results === 10) {
       return "Perfect score! I wonder if you can get it again.";
@@ -34,51 +36,54 @@ export const QuizComplete = (props: props) => {
       return `You should keep practicing, you'll get the hang of it.`;
     }
   };
-  const resultNumberColor = () => {
+
+  const getResultColor = () => {
     if (results === 10) {
-      return "green";
+      return "text-green-600";
     } else if (results >= 6 && results < 10) {
-      return "yellow.0";
+      return "text-yellow-500";
     } else {
-      return "red.0";
+      return "text-red-500";
     }
   };
 
   return (
-    <Flex direction="column" h="16rem" w="16rem" gap="xl" align="center" justify="center">
+    <div className="flex flex-col h-64 w-64 gap-8 items-center justify-center">
       {quizData.length > 0 ? (
         <>
-          <Text c={resultNumberColor()} fw={700} size="4rem">
+          <span className={`${getResultColor()} font-bold text-6xl`}>
             {results}/10
-          </Text>
-          <Text c="gray.9" fs="italic" ta="center">
+          </span>
+          <p className="text-gray-900 italic text-center">
             {resultText()}
-          </Text>
+          </p>
         </>
       ) : (
-        <>
-          <Flex w="100%" h="50%">
-            <Text w="100%" span c={resultNumberColor()} fw={600} size="1.5rem">
-              The server is loading, give it a second or two.
-            </Text>
-          </Flex>
-        </>
+        <div className="w-full h-1/2">
+          <span className={`w-full block ${getResultColor()} font-semibold text-2xl`}>
+            The server is loading, give it a second or two.
+          </span>
+        </div>
       )}
 
-      <Flex gap="lg">
+      <div className="flex gap-4">
         <Link href={"/"}>
-          <Button>Home</Button>
+          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            Home
+          </button>
         </Link>
-        <Button
-          variant="gradient"
+        <button
+          className="px-4 py-2 text-white rounded-lg transition-all"
+          style={{
+            background: `linear-gradient(${degrees}deg, #ec4899, #06b6d4)`,
+          }}
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
           onClick={handlePlayAgain}
-          gradient={{ from: "pink", to: "cyan", deg: degrees }}
         >
           Play again
-        </Button>
-      </Flex>
-    </Flex>
+        </button>
+      </div>
+    </div>
   );
 };

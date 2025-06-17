@@ -1,8 +1,9 @@
-import { Button, Flex, Modal, TextInput } from "@mantine/core";
+import { Modal } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { postQuestion } from "../../api/route";
 import { Bounce, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 type SubmitModalProps = {
   opened: boolean;
   close: () => void;
@@ -18,9 +19,9 @@ export const SubmitModal = (props: SubmitModalProps) => {
       incorrectanswers: ["", "", ""],
     },
     validate: {
-      question: (value) => (value[value.length - 1] !== "?" ? 'Question should end with a "?"' : null),
-      correctanswer: (value) => (value.length === 0 ? "Correct answer is required" : null),
-      incorrectanswers: (value) => (value.some((answer) => answer.length === 0) ? "All incorrect answers are required" : null),
+      question: (value: any) => (value[value.length - 1] !== "?" ? 'Question should end with a "?"' : null),
+      correctanswer: (value: any) => (value.length === 0 ? "Correct answer is required" : null),
+      incorrectanswers: (value: any) => (value.some((answer: any) => answer.length === 0) ? "All incorrect answers are required" : null),
     },
   });
 
@@ -61,31 +62,57 @@ export const SubmitModal = (props: SubmitModalProps) => {
 
   return (
     <Modal opened={opened} onClose={close} title="New Question" centered>
-      <form onSubmit={Form.onSubmit((values) => handleSubmit(values))}>
-        <Flex direction="column" gap="md" align="center">
-          <TextInput withAsterisk key={Form.key("question")} radius="lg" label="Question" w="100%" {...Form.getInputProps("question")} />
-          <TextInput
-            withAsterisk
-            key={Form.key("correctanswer")}
-            radius="lg"
-            label="Correct answer"
-            w="100%"
+      <form onSubmit={Form.onSubmit((values) => handleSubmit(values))} className="flex flex-col gap-4 items-center">
+        <div className="w-full">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Question <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            {...Form.getInputProps("question")}
+          />
+          {Form.errors.question && (
+            <p className="mt-1 text-sm text-red-600">{Form.errors.question}</p>
+          )}
+        </div>
+
+        <div className="w-full">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Correct answer <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             {...Form.getInputProps("correctanswer")}
           />
-          {Form.values.incorrectanswers.map((_, index) => (
-            <TextInput
-              withAsterisk
-              key={Form.key(`incorrectanswers.${index}`)}
-              radius="lg"
-              label={`Wrong answer #${index + 1}`}
-              w="100%"
+          {Form.errors.correctanswer && (
+            <p className="mt-1 text-sm text-red-600">{Form.errors.correctanswer}</p>
+          )}
+        </div>
+
+        {Form.values.incorrectanswers.map((_, index) => (
+          <div key={Form.key(`incorrectanswers.${index}`)} className="w-full">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Wrong answer #{index + 1} <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               {...Form.getInputProps(`incorrectanswers.${index}`)}
             />
-          ))}
-          <Button type="submit" variant="light" w="50%">
-            Submit
-          </Button>
-        </Flex>
+            {Form.errors[`incorrectanswers.${index}`] && (
+              <p className="mt-1 text-sm text-red-600">{Form.errors[`incorrectanswers.${index}`]}</p>
+            )}
+          </div>
+        ))}
+
+        <button
+          type="submit"
+          className="w-1/2 px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-colors"
+        >
+          Submit
+        </button>
       </form>
     </Modal>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { Flex, Stepper, rem } from "@mantine/core";
+import { Stepper, rem } from "@mantine/core";
 import { IconCircleCheck, IconCircleX } from "@tabler/icons-react";
 import { QuizStepContent } from "../quizstepcontent";
 import { QuizComplete } from "../quizcomplete";
@@ -16,15 +16,9 @@ export const QuizStepper = () => {
       currentStep.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }, [active]);
+
   return (
-    <Flex
-      bg="gray.0"
-      w={{ base: "80%", md: "50%", lg: "70%" }}
-      h={{ base: "90%", lg: "80%" }}
-      style={{
-        borderRadius: "2.5rem",
-      }}
-    >
+    <div className="bg-gray-50 w-[80%] md:w-[50%] lg:w-[70%] h-[90%] lg:h-[80%] rounded-[2.5rem]">
       <Stepper
         active={active}
         onStepClick={setActive}
@@ -76,6 +70,6 @@ export const QuizStepper = () => {
           <QuizComplete setActive={setActive} answerResults={answerResults} quizData={quizData} />
         </Stepper.Completed>
       </Stepper>
-    </Flex>
+    </div>
   );
 };

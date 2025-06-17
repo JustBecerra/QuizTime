@@ -1,12 +1,11 @@
-import { Container, Title } from "@mantine/core";
 import React from "react";
 
 export const Header = () => {
   return (
-    <Container>
-      <Title order={1} c="gray.0" mt="1rem">
+    <div className="container mx-auto">
+      <h1 className="text-gray-50 text-4xl font-bold mt-4">
         Fun Quiz
-      </Title>
-    </Container>
+      </h1>
+    </div>
   );
 };
