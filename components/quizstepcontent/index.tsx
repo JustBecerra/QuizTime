@@ -1,4 +1,3 @@
-import { Button, Flex, Title, Text } from "@mantine/core";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { letterArray } from "../../helper/letterstorage";
 import { useQuizContext } from "../../context/QuizProvider";
@@ -22,13 +21,13 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
     setAnswers(newArray);
   }, [quiz.correctanswer, quiz.incorrectanswers]);
 
-  const colorSelection = (answer: string) => {
+  const getButtonColor = (answer: string) => {
     if (answer === quiz.correctanswer && answerChosen) {
-      return "green";
+      return "bg-green-600 hover:bg-green-700";
     } else if (answerChosen && answer !== quiz.correctanswer) {
-      return "red";
+      return "bg-red-600 hover:bg-red-700";
     } else {
-      return "gray.9";
+      return "bg-gray-800 hover:bg-gray-900";
     }
   };
 
@@ -51,51 +50,49 @@ export const QuizStepContent: React.FC<QuizStepContentProps> = (props) => {
   };
 
   return (
-    <Flex justify="center" w="100%" h="100%" align="center" direction="column" gap="2rem">
-      <Flex justify="center" align="center" direction="column">
-        <Title c="gray.9" size="1.5rem" visibleFrom="md" mx="md" mt="1rem">
+    <div className="flex justify-center w-full h-full items-center flex-col gap-8">
+      <div className="flex justify-center items-center flex-col">
+        <h2 className="text-gray-900 text-2xl md:block hidden mx-4 mt-4">
           {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
-        </Title>
+        </h2>
         {typeof quiz.question === "string" && (
-          <Text c="gray.9" visibleFrom="md" size="1rem">
+          <p className="text-gray-900 md:block hidden text-base">
             User submitted question
-          </Text>
+          </p>
         )}
-      </Flex>
-      <Flex>
-        <Title c="gray.9" size="1rem" hiddenFrom="md" mx="md">
+      </div>
+      <div className="md:hidden">
+        <h2 className="text-gray-900 text-base mx-4">
           {typeof quiz.question === "string" ? quiz.question : quiz.question.text}
-        </Title>
+        </h2>
         {typeof quiz.question === "string" && (
-          <Text c="gray.9" hiddenFrom="md" size="0.5rem">
+          <p className="text-gray-900 text-xs">
             User submitted question
-          </Text>
+          </p>
         )}
-      </Flex>
+      </div>
 
-      <Flex direction="column" gap="2rem" w="100%" align="center">
+      <div className="flex flex-col gap-8 w-full items-center">
         {answers.map((answer, index) => (
-          <Button
+          <button
             key={index}
-            leftSection={letterArray[index]}
-            variant="filled"
-            color={colorSelection(answer)}
-            h={{ base: "4rem" }}
-            w={{ base: "90%", md: "60%" }}
+            className={`${getButtonColor(answer)} text-white px-4 py-2 rounded-lg h-16 w-[90%] md:w-[60%] flex items-center transition-colors`}
             onClick={() => CheckAnswer(answer)}
           >
-            <Text size="1rem" visibleFrom="md" truncate="end" style={{ whiteSpace: "pre-wrap", wordWrap: "break-word", lineHeight: "1.25rem" }}>
+            <span className="mr-2">{letterArray[index]}</span>
+            <span className="md:text-base text-sm whitespace-pre-wrap break-words leading-5 md:leading-6">
               {answer}
-            </Text>
-            <Text size="0.75rem" truncate="end" hiddenFrom="md" style={{ whiteSpace: "pre-wrap", wordWrap: "break-word", lineHeight: "1rem" }}>
-              {answer}
-            </Text>
-          </Button>
+            </span>
+          </button>
         ))}
-      </Flex>
-      <Button disabled={!answerChosen} onClick={nextQuestion} mb="1rem">
+      </div>
+      <button
+        disabled={!answerChosen}
+        onClick={nextQuestion}
+        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors mb-4"
+      >
         Next
-      </Button>
-    </Flex>
+      </button>
+    </div>
   );
 };
